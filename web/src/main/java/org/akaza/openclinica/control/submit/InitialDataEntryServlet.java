@@ -53,6 +53,7 @@ public class InitialDataEntryServlet extends DataEntryServlet {
 
     @Override
     protected void mayProceed(HttpServletRequest request, HttpServletResponse response) throws InsufficientPermissionException {
+        System.out.println("Hello World");
         mayAccess(request);
         checkStudyLocked(Page.LIST_STUDY_SUBJECTS, respage.getString("current_study_locked"), request, response);
         checkStudyFrozen(Page.LIST_STUDY_SUBJECTS, respage.getString("current_study_frozen"), request, response);

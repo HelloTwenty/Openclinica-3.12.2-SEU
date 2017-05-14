@@ -16,7 +16,7 @@
 
 <head>
 
-<title><fmt:message key="openclinica" bundle="${resword}"/></title>
+<title>Hello World<fmt:message key="openclinica" bundle="${resword}"/></title>
 
   <link rel="stylesheet" href="includes/styles.css" type="text/css">
 <%-- <link rel="stylesheet" href="includes/styles2.css" type="text/css">--%>

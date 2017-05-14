@@ -19,47 +19,53 @@
 <jsp:useBean scope='request' id='pageMessages' class='java.util.ArrayList'/>
 <jsp:useBean scope='request' id='formMessages' class='java.util.HashMap'/>
 <jsp:useBean scope='request' id='markComplete' class='java.lang.String'/>
+
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head><title>OpenClinica <fmt:message key="initial_data_entry" bundle="${resword}"/></title>
     <meta http-equiv="X-UA-Compatible" content="IE=8" />
 
-    <link rel="stylesheet" href="includes/styles.css" type="text/css" media="screen">
+    <%--<link rel="stylesheet" href="includes/styles.css" type="text/css" media="screen">--%>
 <%-- <link rel="stylesheet" href="includes/styles2.css" type="text/css">--%>
-    <link rel="stylesheet" href="includes/print.css" type="text/css" media="print">
+    <%--<link rel="stylesheet" href="includes/print.css" type="text/css" media="print">--%>
+
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css"/>
     <script type="text/javascript" language="JavaScript">
         //this has been declared here so that it is accessible from other functions in the global_functions_javascript.js
         var checkboxObject;
+
     </script>
     <script type="text/JavaScript" language="JavaScript" src="includes/global_functions_javascript.js"></script>
     <script type="text/JavaScript" language="JavaScript" src="includes/Tabs.js"></script>
     <script type="text/JavaScript" language="JavaScript" src="includes/CalendarPopup.js"></script>
     <script type="text/javascript"  language="JavaScript" src=
-      "includes/repetition-model/repetition-model.js"></script>
+    "includes/repetition-model/repetition-model.js"></script>
     <script type="text/JavaScript" language="JavaScript" src="includes/prototype.js"></script>
     <script type="text/JavaScript" language="JavaScript" src="includes/scriptaculous.js?load=effects"></script>
     <script type="text/JavaScript" language="JavaScript" src="includes/effects.js"></script>
 
     <!-- Added for the new Calender -->
 
-        <link rel="stylesheet" type="text/css" media="all" href="includes/new_cal/skins/aqua/theme.css" title="Aqua" />
-        <script type="text/javascript" src="includes/new_cal/calendar.js"></script>
-        <script type="text/javascript" src="includes/new_cal/lang/calendar-en.js"></script>
-	    <script type="text/javascript" src="includes/new_cal/lang/<fmt:message key="jscalendar_language_file" bundle="${resformat}"/>"></script>
-	    <script type="text/javascript" src="includes/new_cal/calendar-setup.js"></script>
-    <!-- End -->
+    <link rel="stylesheet" type="text/css" media="all" href="includes/new_cal/skins/aqua/theme.css" title="Aqua" />
 
+    <script type="text/javascript" src="includes/new_cal/calendar.js"></script>
+    <script type="text/javascript" src="includes/new_cal/lang/calendar-en.js"></script>
+    <script type="text/javascript" src="includes/new_cal/lang/<fmt:message key="jscalendar_language_file" bundle="${resformat}"/>"></script>
+    <script type="text/javascript" src="includes/new_cal/calendar-setup.js"></script>
+    <!-- End -->
 </head>
-<body class="aka_bodywidth" onload=" document.getElementById('here').style.display='none'; document.getElementById('CRF_infobox_closed').style.display='block';document.getElementById('CRF_infobox_open').style.display='none';"  onunload="javascript:clsWin();" >
+
+<body class="aka_bodywidth" onload="document.getElementById('here').style.display='none'; document.getElementById('CRF_infobox_closed').style.display='block';document.getElementById('CRF_infobox_open').style.display='none';"  onunload="javascript:clsWin();" >
 
 <c:import url="../submit/showItemInputToolTipsJS.jsp"></c:import>
 
-<div id="centralContainer" style=
-  "padding-left:3em; margin-top:1em;background-color: white; color:black;">
+<div id="centralContainer" style="padding-left:3em; margin-top:1em;background-color: white; color:black;">
 
 
 <%-- set button text depending on whether or not the user is confirming values --%>
@@ -74,57 +80,75 @@
     </c:otherwise>
 </c:choose>
 
-<table width="75%"><tr><td>
-<h1><span class="title_manage"> <b> <c:out value="${toc.crf.name}" /> <c:out value="${toc.crfVersion.name}" />
-         <c:choose>
-            <c:when test="${eventCRF.stage.initialDE}">
-                <img src="images/icon_InitialDE.gif" alt="<fmt:message key="initial_data_entry" bundle="${resword}"/>"
-                     title="<fmt:message key="initial_data_entry" bundle="${resword}"/>">
-            </c:when>
-            <c:when
-              test="${eventCRF.stage.initialDE_Complete}">
-                <img src="images/icon_InitialDEcomplete.gif"
-                     alt="<fmt:message key="initial_data_entry_complete" bundle="${resword}"/>"
-                     title="<fmt:message key="initial_data_entry_complete" bundle="${resword}"/>">
-            </c:when>
-            <c:when test="${eventCRF.stage.doubleDE}">
-                <img src="images/icon_DDE.gif" alt="<fmt:message key="double_data_entry" bundle="${resword}"/>"
-                     title="<fmt:message key="double_data_entry" bundle="${resword}"/>">
-            </c:when>
-            <c:when test="${eventCRF.stage.doubleDE_Complete}">
-                <img src="images/icon_DEcomplete.gif" alt="<fmt:message key="data_entry_complete" bundle="${resword}"/>"
-                     title="<fmt:message key="data_entry_complete" bundle="${resword}"/>">
-            </c:when>
-            <c:when test="${eventCRF.stage.admin_Editing}">
-                <img src="images/icon_AdminEdit.gif"
-                     alt="<fmt:message key="administrative_editing" bundle="${resword}"/>" title="<fmt:message key="administrative_editing" bundle="${resword}"/>">
-            </c:when>
-            <c:when test="${eventCRF.stage.locked}">
-                <img src="images/icon_Locked.gif" alt="<fmt:message key="locked" bundle="${resword}"/>" title="<fmt:message key="locked" bundle="${resword}"/>">
-            </c:when>
-            <c:when test="${eventCRF.stage.invalid}">
-                <img src="images/icon_Invalid.gif" alt="<fmt:message key="invalid" bundle="${resword}"/>" title="<fmt:message key="invalid" bundle="${resword}"/>">
-            </c:when>
-            <c:otherwise>
+    <%--标题--%>
+<table width="75%">
+    <tr>
+        <td>
+            <h1>Hello WOrld<span class="title_manage"> <b> <c:out value="${toc.crf.name}" /> <c:out value="${toc.crfVersion.name}" />
+                <c:choose>
+                    <c:when test="${eventCRF.stage.initialDE}">
+                        <img src="images/icon_InitialDE.gif" alt="<fmt:message key="initial_data_entry" bundle="${resword}"/>"
+                             title="<fmt:message key="initial_data_entry" bundle="${resword}"/>">
+                    </c:when>
 
-            </c:otherwise>
-        </c:choose></b>  &nbsp;&nbsp;</span> </h1> </td><td>
-		<h1><span class="title_manage"> <c:out value="${studySubject.label}" />&nbsp;&nbsp; </span></h1></td></tr></table>
+                    <c:when
+                      test="${eventCRF.stage.initialDE_Complete}">
+                        <img src="images/icon_InitialDEcomplete.gif"
+                             alt="<fmt:message key="initial_data_entry_complete" bundle="${resword}"/>"
+                             title="<fmt:message key="initial_data_entry_complete" bundle="${resword}"/>">
+                    </c:when>
+
+                    <c:when test="${eventCRF.stage.doubleDE}">
+                        <img src="images/icon_DDE.gif" alt="<fmt:message key="double_data_entry" bundle="${resword}"/>"
+                             title="<fmt:message key="double_data_entry" bundle="${resword}"/>">
+                    </c:when>
+
+                    <c:when test="${eventCRF.stage.doubleDE_Complete}">
+                        <img src="images/icon_DEcomplete.gif" alt="<fmt:message key="data_entry_complete" bundle="${resword}"/>"
+                             title="<fmt:message key="data_entry_complete" bundle="${resword}"/>">
+                    </c:when>
+
+                    <c:when test="${eventCRF.stage.admin_Editing}">
+                        <img src="images/icon_AdminEdit.gif"
+                             alt="<fmt:message key="administrative_editing" bundle="${resword}"/>" title="<fmt:message key="administrative_editing" bundle="${resword}"/>">
+                    </c:when>
+
+                    <c:when test="${eventCRF.stage.locked}">
+                        <img src="images/icon_Locked.gif" alt="<fmt:message key="locked" bundle="${resword}"/>" title="<fmt:message key="locked" bundle="${resword}"/>">
+                    </c:when>
+
+                    <c:when test="${eventCRF.stage.invalid}">
+                        <img src="images/icon_Invalid.gif" alt="<fmt:message key="invalid" bundle="${resword}"/>" title="<fmt:message key="invalid" bundle="${resword}"/>">
+                    </c:when>
+
+                    <c:otherwise>
+                    </c:otherwise>
+                </c:choose>
+            </b>  &nbsp;&nbsp; </span>
+            </h1>
+        </td>
+
+        <td>
+		<h1><span class="title_manage"> <c:out value="${studySubject.label}" />&nbsp;&nbsp; </span></h1>
+        </td>
+
+    </tr>
+</table>
 <%--the tabId default value is set in DataEntryServlet.getInputBeans()--%>
 
 
 
 <!--InitialDataEntry  inputs-->
 <form id="mainForm" name="crfForm" method="post" action="InitialDataEntry">
-<input type="hidden" name="eventCRFId" value="<c:out value="${section.eventCRF.id}"/>" />
-<input type="hidden" name="sectionId" value="<c:out value="${section.section.id}"/>" />
-<input type="hidden" name="checkInputs" value="<c:out value="${checkInputsValue}"/>" />
-<input type="hidden" name="tab" value="<c:out value="${tabId}"/>" />
+    <input class="form-control" type="hidden" name="eventCRFId" value="<c:out value="${section.eventCRF.id} + a"/>" />
+    <input type="hidden" name="sectionId" value="<c:out value="${section.section.id} + b"/>" />
+    <input type="hidden" name="checkInputs" value="<c:out value="${checkInputsValue} + c"/>" />
+    <input type="hidden" name="tab" value="<c:out value="${tabId} + d"/>" />
 <%-- We have to feed this value to the method giveFirstElementFocus()--%>
-<input id="formFirstField" type="hidden" name="formFirstField" value="${requestScope['formFirstField']}" />
-<input type="hidden" name="exitTo" value="${exitTo}" />
-<input type="hidden" name="sectionId" value="<c:out value="${section.section.id}"/>" />
-<input type="hidden" name="isFirstTimeOnSection" value="<c:out value="${section.section.id}"/>" />
+    <input id="formFirstField" type="hidden" name="formFirstField" value="${requestScope['formFirstField']} + e" />
+    <input type="hidden" name="exitTo" value="${exitTo} + f" />
+    <input type="hidden" name="sectionId" value="<c:out value="${section.section.id} + g"/>" />
+    <input type="hidden" name="isFirstTimeOnSection" value="<c:out value="${section.section.id} + h"/>" />
 
 <%--FF: ${requestScope['formFirstField']}<br />--%>
 
@@ -1396,13 +1420,14 @@ table-->
 <!-- End Table Contents -->
 
 </form>
+
+
 </div>
-</div></div></div></div></div></div></div></div>
-</div>
-</div>
+
+
+
 <div id="testdiv1" style=
   "position:absolute;visibility:hidden;background-color:white"></div>
-</div>
 
 </body>
 </html>
