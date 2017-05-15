@@ -87,7 +87,7 @@
 	<table width="75%">
 		<tr>
 			<td>
-				<h1><span class="title_manage"> <b> <c:out value="${toc.crf.name} + Hello "/> <c:out
+				<h1><span class="title_manage" style="font-size:24px;width:100%;margin-left:60%;" > <b> <c:out value="${toc.crf.name}  "/> <c:out
 						value="${toc.crfVersion.name}"/>
                 <c:choose>
 	                <c:when test="${eventCRF.stage.initialDE}">
@@ -138,7 +138,7 @@
 			</td>
 
 			<td>
-				<h1><span class="title_manage"> <c:out value="${studySubject.label}"/>&nbsp;&nbsp; </span></h1>
+				<h1><span class="title_manage" style="font-size:24px;"> <c:out value="${studySubject.label}"/>&nbsp;&nbsp; </span></h1>
 			</td>
 
 		</tr>

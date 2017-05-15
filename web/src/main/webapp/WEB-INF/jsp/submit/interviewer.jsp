@@ -26,7 +26,7 @@
 <c:set var="itemId" value="${displayItem.item.id}"/>
 <c:set var="contextPath"
        value="${fn:replace(pageContext.request.requestURL, fn:substringAfter(pageContext.request.requestURL, pageContext.request.contextPath), '')}"/>
-
+<link rel="stylesheet" href="bootstrap/css/bootstrap.css"/>
 <script type="text/JavaScript" language="JavaScript" src="includes/jmesa/jquery.min.js"></script>
 <script type="text/javascript" language="JavaScript" src="includes/jmesa/jquery-migrate-1.1.1.js"></script>
 <style type="text/css">
@@ -36,9 +36,8 @@
 		width: 100%;
 
 	}
-
 </style>
-<link rel="stylesheet" href="bootstrap/css/bootstrap.css"/>
+
 
 <script type="text/javascript" language="javascript">
 
@@ -199,13 +198,13 @@
 	</c:if>
 </c:forEach>
 <!-- End of Alert Box -->
-<table  style="max-width: 100%; background-color: transparent; border-collapse: collapse; border-spacing: 0; border: 1px solid rgba(34 , 36 , 38 , .15); width: 100%; margin-bottom: 20px;">
+<table  style=" max-width: 90%; background-color: white; width: 90%; margin-bottom: 20px;margin-left:5%;">
 
 	<c:choose>
 	<c:when test="${study.studyParameterConfig.interviewerNameRequired == 'yes' || study.studyParameterConfig.interviewDateRequired == 'yes'}">
 
 		<%--CRF表信息关闭时--%>
-	<tr id="CRF_infobox_closed" style="display:none; background-color: #2aabd2">
+	<%--<tr id="CRF_infobox_closed" style="display:none; background-color: #2aabd2">
 		<td style="padding-top: 3px; padding-left: 6px; width: 250px;" nowrap>
 			<a href="javascript:leftnavExpand('CRF_infobox_closed'); leftnavExpand('CRF_infobox_open');">
 				<img src="<c:out value="${contextPath}" />/images/sidebar_expand.gif" align="left" border="0"
@@ -213,15 +212,15 @@
 				<b><fmt:message key="CRF_info" bundle="${resword}"/></b>
 			</a>
 		</td>
-	</tr>
+	</tr>--%>
 
 		<%--CRF表信息开启时--%>
-	<tr id="CRF_infobox_open" style="background-color: #7CB98F">
-		<%--<td>--%>
+	<%--<tr id="CRF_infobox_open" style="background-color: #7CB98F">
+		&lt;%&ndash;<td>&ndash;%&gt;
 			<table style="max-width: 100%; background-color: black; border-collapse: collapse; border-spacing: 0; border: 1px solid rgba(34 , 36 , 38 , .15); width: 100%; margin-bottom: 20px;">
 				<tr>
 					<td valign="bottom">
-						<table border="0" cellpadding="0" cellspacing="0" width="100">
+						<table  width="100%">
 							<tr>
 								<td nowrap>
 									<div class="tab_BG_h">
@@ -241,12 +240,12 @@
 							</tr>
 						</table>
 					</td>
-				</tr>
+				</tr>--%>
 				</c:when>
 				<c:otherwise>
 
 					<%--CRF表信息关闭时--%>
-				<tr id="CRF_infobox_closed">
+<%--				<tr id="CRF_infobox_closed">
 					<td style="padding-top: 3px; padding-left: 6px; width: 250px;" nowrap>
 						<a href="javascript:leftnavExpand('CRF_infobox_closed'); leftnavExpand('CRF_infobox_open');">
 							<img src="<c:out value="${contextPath}" />/images/sidebar_expand.gif" align="left"
@@ -254,12 +253,12 @@
 							<b><fmt:message key="CRF_info" bundle="${resword}"/></b>
 						</a>
 					</td>
-				</tr>
+				</tr>--%>
 
 					<%--CRF表信息开启时--%>
-				<tr id="CRF_infobox_open" style="display: none;">
+<%--				<tr id="CRF_infobox_open" >
 					<td>
-						<table border="0" cellpadding="0" cellspacing="0" width="80%">
+						<table  width="80%">
 							<tr>
 								<td valign="bottom">
 									<table border="0" cellpadding="0" cellspacing="0" width="100">
@@ -282,7 +281,7 @@
 										</tr>
 									</table>
 								</td>
-							</tr>
+							</tr>--%>
 
 							</c:otherwise>
 							</c:choose>
@@ -302,153 +301,109 @@
 										<%--<div class="tablebox_center">--%>
 									</b>
 
-									<table border="1" cellpadding="0" cellspacing="0" width="100%">
-										<tr>
-											<!--event-->
-											<td class="table_cell_noborder">
-												<b><fmt:message key="event" bundle="${resword}"/>:</b>
-											</td>
+									<table class="table table-bordered"  width="100%">
+										<div style="text-align:center;width:100%;font-size:16px;margin-top:20px;" >
 
-											<td>
-												<c:out value="${toc.studyEventDefinition.name}"/>&nbsp;(<fmt:formatDate
-													value="${toc.studyEvent.dateStarted}"
-													pattern="${dteFormat}"/>)
-											</td>
+												<b><fmt:message key="CRF_info" bundle="${resword}"/></b>
 
-											<td class="table_cell_top">
-												<span><b><fmt:message key="gender" bundle="${resword}"/>:</b></span>
-											</td>
+										</div>
+                                        <tr width="100%">
+	                                        <td style="border:1px solid #ADADAD; font-weight: normal;" width="80%" valign="top" >
+		                                        <li>
+			                                        <b><fmt:message key="event" bundle="${resword}"/>:</b>
+			                                        <c:out value="${toc.studyEventDefinition.name}"/>&nbsp;(<fmt:formatDate
+				                                        value="${toc.studyEvent.dateStarted}"
+				                                        pattern="${dteFormat}"/>)
+		                                        </li>
+		                                        <li>
+			                                        <c:if test="${toc.studyEventDefinition.repeating}">
 
-											<td class="table_cell_noborder"
-											    style="padding-left:3px">
-												<c:choose>
-													<c:when test="${subject.gender==109}"><fmt:message
-															key="M"
-															bundle="${resword}"/></c:when>
-													<c:when test="${subject.gender==102}"><fmt:message
-															key="F"
-															bundle="${resword}"/></c:when>
-													<c:otherwise>
-														<c:out value="${subject.gender}"/>
-													</c:otherwise>
-												</c:choose>
-											</td>
+				                                        <b><fmt:message
+						                                        key="occurrence_number"
+						                                        bundle="${resword}"/>:</b>
+			                                        </c:if>
+			                                        <c:if test="${toc.studyEventDefinition.repeating}">
+				                                        <c:out value="${toc.studyEvent.sampleOrdinal}"/>
+			                                        </c:if>
+		                                        </li>
+		                                        <li>
+			                                        <b><fmt:message key="study" bundle="${resword}"/>:</b>
+			                                        <c:out value="${studyTitle}"/>
+		                                        </li>
+		                                        <li>
+			                                        <b><fmt:message key="site" bundle="${resword}"/>:</b>
+			                                        <c:if test="${study.parentStudyId > '0'}">
+				                                        <c:out value="${siteTitle}"/><br>
+			                                        </c:if>
+			                                        <c:if test="${study.parentStudyId == '0'}">
+				                                        <fmt:message key="na"
+				                                                     bundle="${resword}"/><br>
+			                                        </c:if>
+		                                        </li>
+	                                        </td>
+	                                        <td style="border:1px solid #ADADAD;" width="20%" valign="top" >
+		                                        <li>
+			                                        <b><fmt:message key="gender" bundle="${resword}"/>:</b>
+			                                        <c:choose>
+				                                        <c:when test="${subject.gender==109}"><fmt:message
+						                                        key="M"
+						                                        bundle="${resword}"/></c:when>
+				                                        <c:when test="${subject.gender==102}"><fmt:message
+						                                        key="F"
+						                                        bundle="${resword}"/></c:when>
+				                                        <c:otherwise>
+					                                        <c:out value="${subject.gender}"/>
+				                                        </c:otherwise>
+			                                        </c:choose>
+		                                        </li>
+		                                        <li>
+			                                        <b><fmt:message key="age_at_enrollment"
+			                                                        bundle="${resword}"/>:</b>
+			                                        <c:out value="${age}"/>
+		                                        </li>
+		                                        <li>
+			                                        <c:if test="${study.studyParameterConfig.collectDob != '3'}">
+				                                        <c:choose>
+					                                        <c:when test="${study.studyParameterConfig.collectDob =='1'}">
+						                                        <b><fmt:message
+								                                        key="date_of_birth"
+								                                        bundle="${resword}"/>:</b><br/>
+					                                        </c:when>
+					                                        <c:otherwise>
+						                                        <b><fmt:message
+								                                        key="year_of_birth"
+								                                        bundle="${resword}"/>:</b><br/>
+					                                        </c:otherwise>
+				                                        </c:choose>
+			                                        </c:if>
+			                                        <c:if test="${study.studyParameterConfig.collectDob != '3'}">
+				                                        <%-- BWP 3105 Until the SubjectBean uses the Calendar object to represent
+											 the date of birth, we will have to use the Date.getYear() deprecated method.--%>
 
-										</tr>
-
-										<tr>
-											<!-- Occurence id-->
-											<td class="table_cell_noborder">
-												<c:if test="${toc.studyEventDefinition.repeating}">
-
-													<b><fmt:message
-															key="occurrence_number"
-															bundle="${resword}"/>:</b>
-												</c:if>
-											</td>
-
-											<td class="table_cell_noborder">
-												<c:if test="${toc.studyEventDefinition.repeating}">
-													<c:out value="${toc.studyEvent.sampleOrdinal}"/>
-												</c:if>
-											</td>
-
-											<!-- Age at Enrollment-->
-											<td class="table_cell_top">
-
-												<b><fmt:message key="age_at_enrollment"
-												                bundle="${resword}"/>:</b><br>
-
-											</td>
-
-											<td class="table_cell_noborder">
-												<c:out value="${age}"/><br>
-											</td>
-
-										</tr>
-
-										<tr>
-											<!--study-->
-											<td class="table_cell_noborder">
-
-												<b><fmt:message key="study" bundle="${resword}"/>:</b><br>
-											</td>
-
-											<td class="table_cell_noborder">
-												<c:out value="${studyTitle}"/><br>
-											</td>
-
-											<td class="table_cell_top">
-												<c:if test="${study.studyParameterConfig.collectDob != '3'}">
-													<c:choose>
-														<c:when test="${study.studyParameterConfig.collectDob =='1'}">
-															<b><fmt:message
-																	key="date_of_birth"
-																	bundle="${resword}"/>:</b><br/>
-														</c:when>
-														<c:otherwise>
-															<b><fmt:message
-																	key="year_of_birth"
-																	bundle="${resword}"/>:</b><br/>
-														</c:otherwise>
-													</c:choose>
-												</c:if>
-											</td>
-
-											<td class="table_cell_noborder">
-												<c:if test="${study.studyParameterConfig.collectDob != '3'}">
-													<%-- BWP 3105 Until the SubjectBean uses the Calendar object to represent
-										 the date of birth, we will have to use the Date.getYear() deprecated method.--%>
-
-													<c:choose>
-														<c:when test="${study.studyParameterConfig.collectDob == '2' && subject.dateOfBirth.year != null}">${subject.dateOfBirth.year + 1900}</c:when>
-														<c:otherwise> <fmt:formatDate
-																value="${subject.dateOfBirth}"
-																pattern="${dteFormat}"/></c:otherwise>
-													</c:choose>
-													<%-->> --%>
-												</c:if>
-
-
-												<br/>
-											</td>
-
-										</tr>
-
-										<tr>
-											<!--site to be implemented -->
-											<td class="table_cell_noborder">
-												<b><fmt:message key="site" bundle="${resword}"/>:</b><br>
-											</td>
-
-											<td class="table_cell_noborder">
-												<c:if test="${study.parentStudyId > '0'}">
-													<c:out value="${siteTitle}"/><br>
-												</c:if>
-												<c:if test="${study.parentStudyId == '0'}">
-													<fmt:message key="na"
-													             bundle="${resword}"/><br>
-												</c:if>
-											</td>
-
-											<!--person id todo -->
-											<c:choose>
-												<c:when test="${study.studyParameterConfig.personIdShownOnCRF == 'true'}">
-													<td class="table_cell_top">
-														<b><fmt:message key="person_ID"
-														                bundle="${resword}"/>:</b><br/>
-													</td>
-													<td class="table_cell_noborder">
-														<c:out value="${subject.uniqueIdentifier}"/><br/>
-													</td>
-
-												</c:when>
-												<c:otherwise>
-													<td class="table_cell"></td>
-													<td class="table_cell_left"></td>
-												</c:otherwise>
-											</c:choose>
-										</tr>
+				                                        <c:choose>
+					                                        <c:when test="${study.studyParameterConfig.collectDob == '2' && subject.dateOfBirth.year != null}">${subject.dateOfBirth.year + 1900}</c:when>
+					                                        <c:otherwise> <fmt:formatDate
+							                                        value="${subject.dateOfBirth}"
+							                                        pattern="${dteFormat}"/></c:otherwise>
+				                                        </c:choose>
+				                                        <%-->> --%>
+			                                        </c:if>
+		                                        </li>
+		                                        <c:choose>
+		                                        <c:when test="${study.studyParameterConfig.personIdShownOnCRF == 'true'}">
+	                                        <li>
+		                                        <b><fmt:message key="person_ID"
+		                                                        bundle="${resword}"/>:</b>
+		                                        <c:out value="${subject.uniqueIdentifier}"/>
+                                            </li>
+	                                        </c:when>
+	                                        <c:otherwise>
+		                                        <td class="table_cell"></td>
+		                                        <td class="table_cell_left"></td>
+	                                        </c:otherwise>
+	                                        </c:choose>
+	                                        </td>
+                                        </tr>
 
 
 										<c:forEach var="frmMsg" items="${formMessages}">
@@ -783,76 +738,62 @@
 										<tr>
 
 											<td colspan="5" valign="top" class="table_cell_left">
-												<b>Discrepancy Notes on this CRF:</b></td>
+												<b>此CRF上的注释与质疑:</b></td>
 
 										</tr>
 
+                                <table width="96%">
 										<tr>
-											<table border="1" cellspacing="1"
-											       cellpadding="0" width="100%">
-												<tr>
 													<td valign="top" align="center"
-													    class="table_cell_left"
-													    style="border-right:1px solid #E6E6E6;color:#CC0000;"
+													    style="border:1px solid #ADADAD;color:#CC0000;"
 													    width="20%"><fmt:message
 															key="open"
 															bundle="${resword}"/></td>
 													<td valign="top" align="center"
-													    class="table_cell_left"
-													    style="border-right:1px solid #E6E6E6;color:#D4A718;"
+													    style="border:1px solid #ADADAD;color:#B8860B;"
 													    width="20%"><fmt:message
 															key="updated"
 															bundle="${resword}"/></td>
 													<td valign="top" align="center"
-													    class="table_cell_left"
-													    style="border-right:1px solid #E6E6E6;color:#7CB98F;"
+													    style="border:1px solid #ADADAD;color:#218868;"
 													    width="20%"><fmt:message
 															key="resolved"
 															bundle="${resword}"/></td>
 													<td valign="top" align="center"
-													    class="table_cell_left"
-													    style="border-right:1px solid #E6E6E6;color:black;"
+													    style="border:1px solid #ADADAD;color:black;"
 													    width="20%"><fmt:message
 															key="closed"
 															bundle="${resword}"/></td>
 													<td valign="top" align="center"
-													    class="table_cell_left"
-													    style="border-right:1px solid #E6E6E6;color:black"
+													    style="border:1px solid #ADADAD;color:black;"
 													    width="20%"><fmt:message
 															key="not_applicable"
 															bundle="${resword}"/></td>
-												</tr>
-												<tr>
+										</tr>
+										<tr>
 													<td valign="top" align="center"
-													    class="table_cell_left"
-													    style="border-right:1px solid #E6E6E6;color:#CC0000;"
+													    style="border:1px solid #ADADAD;color:#CC0000;"
 													    width="20%"><c:out
 															value="${openNum}"/></td>
 													<td valign="top" align="center"
-													    class="table_cell_left"
-													    style="border-right:1px solid #E6E6E6;color:#D4A718;"
+													    style="border:1px solid #ADADAD;color:#B8860B;"
 													    width="20%"><c:out
 															value="${updatedNum}"/></td>
 													<td valign="top" align="center"
-													    class="table_cell_left"
-													    style="border-right:1px solid #E6E6E6;color:#7CB98F;;"
+													    style="border:1px solid #ADADAD;color:#218868;"
 													    width="20%"><c:out
 															value="${resolvedNum}"/></td>
 													<td valign="top" align="center"
-													    class="table_cell_left"
-													    style="border-right:1px solid #E6E6E6;color:black;"
+													    style="border:1px solid #ADADAD;color:black;"
 													    width="20%"><c:out
 															value="${closedNum}"/></td>
 													<td valign="top" align="center"
-													    class="table_cell_left"
-													    style="border-right:1px solid #E6E6E6;color:black"
+													    style="border:1px solid #ADADAD;color:black;"
 													    width="20%"><c:out
 															value="${notAppNum}"/></td>
-												</tr>
-											</table>
-										</tr>
-
-									</table>
+										 </tr>
+                                </table>
+						</table>
 
 
 									<%--被注释的部分--%>
