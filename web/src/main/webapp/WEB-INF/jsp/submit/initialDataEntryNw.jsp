@@ -28,7 +28,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-<head><title>OpenClinica <fmt:message key="initial_data_entry" bundle="${resword}"/></title>
+<head> <title>OpenClinica <fmt:message key="initial_data_entry" bundle="${resword}"/> </title>
 	<meta http-equiv="X-UA-Compatible" content="IE=8"/>
 
 	<%--<link rel="stylesheet" href="includes/styles.css" type="text/css" media="screen">--%>
@@ -42,6 +42,7 @@
         var checkboxObject;
 
 	</script>
+
 	<script type="text/JavaScript" language="JavaScript" src="includes/global_functions_javascript.js"></script>
 	<script type="text/JavaScript" language="JavaScript" src="includes/Tabs.js"></script>
 	<script type="text/JavaScript" language="JavaScript" src="includes/CalendarPopup.js"></script>
@@ -68,7 +69,7 @@
 
 <%--<c:import url="../submit/showItemInputToolTipsJS.jsp"></c:import>--%>
 
-<div id="centralContainer" style="padding-left:3em; margin-top:1em;background-color: white; color:black;">
+<div id="centralContainer"  class="container" width="100%">
 
 
 	<%-- set button text depending on whether or not the user is confirming values --%>
@@ -84,10 +85,11 @@
 	</c:choose>
 
 	<%--只与本页标题 --%>
-	<table width="75%">
-		<tr>
-			<td>
-				<h1><span class="title_manage" style="font-size:24px;width:100%;margin-left:60%;" > <b> <c:out value="${toc.crf.name}  "/> <c:out
+	<div class="jumbotron" style="padding-bottom: 0px; padding-top: 2%; margin-bottom: 0px;text-align: center">
+		<%--<tr>--%>
+			<%--<td>--%>
+				<h1><span class="text-center" > <b> <c:out
+						value="${toc.crf.name}  "/> <c:out
 						value="${toc.crfVersion.name}"/>
                 <c:choose>
 	                <c:when test="${eventCRF.stage.initialDE}">
@@ -135,25 +137,28 @@
                 </c:choose>
             </b>  &nbsp;&nbsp; </span>
 				</h1>
-			</td>
+			<%--</td>--%>
 
-			<td>
-				<h1><span class="title_manage" style="font-size:24px;"> <c:out value="${studySubject.label}"/>&nbsp;&nbsp; </span></h1>
-			</td>
+			<%--<td>--%>
+				<%--<h1><span class="title_manage" style="font-size:24px;"> <c:out value="${studySubject.label}"/>&nbsp;&nbsp; </span>--%>
+				<%--</h1>--%>
+			<%--</td>--%>
 
-		</tr>
-	</table>
+		<%--</tr>--%>
+	</div>
 	<%--the tabId default value is set in DataEntryServlet.getInputBeans()--%>
 
 	<%--标题下CRF信息--%>
-	<c:import url="interviewer.jsp">
-		<c:param name="hasNameNote" value="${hasNameNote}"/>
-		<c:param name="hasDateNote" value="${hasDateNote}"/>
-	</c:import>
+		<div class="jumbotron" style="background-color: #B6C4CF;padding-bottom: 1px;padding-top: 1px;padding-left: -;padding-left:;padding-left: 0px;padding-right: 0px;margin-bottom: 0px;">
+			<c:import url="interviewer.jsp">
+				<c:param name="hasNameNote" value="${hasNameNote}"/>
+				<c:param name="hasDateNote" value="${hasDateNote}"/>
+			</c:import>
+		</div>
 
 
 	<!--InitialDataEntry  inputs-->
-	<form id="mainForm" name="crfForm" method="post" action="InitialDataEntry" class="form-inline">
+	<div id="mainForm" name="crfForm" method="post" action="InitialDataEntry" class="form-inline">
 
 		<%--2017-5-14 注释后无影响--%>
 		<%--<input class="form-control" type="hidden" name="eventCRFId" value="<c:out value="${section.eventCRF.id} + a"/>" />--%>
@@ -219,7 +224,8 @@
 			</div>
 		</c:if>
 
-		<%--选项标题栏--%>
+
+			<%--选项标题栏--%>
 		<c:set var="sectionNum" value="0"/>
 		<c:forEach var="section" items="${toc.sections}">
 			<c:set var="sectionNum" value="${sectionNum+1}"/>
@@ -272,7 +278,7 @@
 
 
 		<!-- section tabs here -->
-		<table class="table">
+		<table class="table" style="margin: 1%;background-color: white;text-align: center;" border="2" cellspacing="0" width="100%">
 			<tr>
 				<%-- if only one section show no arrows & section jump --%>
 				<c:if test="${fn:length(toc.sections) gt 1}">
@@ -504,7 +510,7 @@
 					                                                                        border="0" style=
 							                                                                        "margin-top:10px;margin-right:6px"/></a>
 					</td>
-					<td>&nbsp;
+					<td>
 						<div class="formfieldM_BG_noMargin">
 							<select id="sectionTabSelectElement" class="formfieldM" name="sectionName" size="1"
 							        onchange="gotoLink();">
@@ -524,8 +530,8 @@
 
 			</tr>
 		</table>
-		<input type="hidden" name="submitted" value="1"/>
 
+			<input type="hidden" name="submitted" value="1"/>
 		<script type="text/javascript" language="JavaScript">
             <!--
             function checkSectionStatus() {

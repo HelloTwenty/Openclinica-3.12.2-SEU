@@ -198,7 +198,9 @@
 	</c:if>
 </c:forEach>
 <!-- End of Alert Box -->
-<table  style=" max-width: 90%; background-color: white; width: 90%; margin-bottom: 20px;margin-left:5%;">
+
+
+<table  style="background-color: white; width: 96%; margin: 2%">
 
 	<c:choose>
 	<c:when test="${study.studyParameterConfig.interviewerNameRequired == 'yes' || study.studyParameterConfig.interviewDateRequired == 'yes'}">
@@ -245,7 +247,7 @@
 				<c:otherwise>
 
 					<%--CRF表信息关闭时--%>
-<%--				<tr id="CRF_infobox_closed">
+				<%--<tr id="CRF_infobox_closed">
 					<td style="padding-top: 3px; padding-left: 6px; width: 250px;" nowrap>
 						<a href="javascript:leftnavExpand('CRF_infobox_closed'); leftnavExpand('CRF_infobox_open');">
 							<img src="<c:out value="${contextPath}" />/images/sidebar_expand.gif" align="left"
@@ -287,49 +289,44 @@
 							</c:choose>
 
 							<tr>
-								<td valign="top">
-									<%--被注释的部分--%>
-									<b>
-										<%--<div class="box_T">--%>
-										<%--<div class="box_L">--%>
-										<%--<div class="box_R">--%>
-										<%--<div class="box_B">--%>
-										<%--<div class="box_TR">--%>
-										<%--<div class="box_BL">--%>
-										<%--<div class="box_BR">--%>
+								<td valign="top" style="padding-bottom: 2%;padding-left: 1%;padding-right: 1%">
 
-										<%--<div class="tablebox_center">--%>
-									</b>
 
-									<table class="table table-bordered"  width="100%">
-										<div style="text-align:center;width:100%;font-size:16px;margin-top:20px;" >
+									<table id="CRF_infobox_open" class="table table-bordered"  width="100%">
+										<div style="text-align:center;width:100%;font-size:16px;margin-top:2%;" >
 
-												<b><fmt:message key="CRF_info" bundle="${resword}"/></b>
+												<h2><fmt:message key="CRF_info" bundle="${resword}"/></h2>
 
 										</div>
                                         <tr width="100%">
 	                                        <td style="border:1px solid #ADADAD; font-weight: normal;" width="80%" valign="top" >
 		                                        <li>
 			                                        <b><fmt:message key="event" bundle="${resword}"/>:</b>
-			                                        <c:out value="${toc.studyEventDefinition.name}"/>&nbsp;(<fmt:formatDate
+			                                        <c:out value="${toc.studyEventDefinition.name} 1"/>&nbsp;<fmt:formatDate
 				                                        value="${toc.studyEvent.dateStarted}"
-				                                        pattern="${dteFormat}"/>)
+				                                        pattern="${dteFormat}"/>
 		                                        </li>
+
+		                                        <%--逻辑未出错--%>
 		                                        <li>
 			                                        <c:if test="${toc.studyEventDefinition.repeating}">
-
 				                                        <b><fmt:message
 						                                        key="occurrence_number"
 						                                        bundle="${resword}"/>:</b>
 			                                        </c:if>
+
 			                                        <c:if test="${toc.studyEventDefinition.repeating}">
-				                                        <c:out value="${toc.studyEvent.sampleOrdinal}"/>
+
+				                                        <c:out value="${toc.studyEvent.sampleOrdinal} 2"/>
+
 			                                        </c:if>
 		                                        </li>
+
 		                                        <li>
 			                                        <b><fmt:message key="study" bundle="${resword}"/>:</b>
 			                                        <c:out value="${studyTitle}"/>
 		                                        </li>
+
 		                                        <li>
 			                                        <b><fmt:message key="site" bundle="${resword}"/>:</b>
 			                                        <c:if test="${study.parentStudyId > '0'}">
@@ -340,6 +337,7 @@
 				                                                     bundle="${resword}"/><br>
 			                                        </c:if>
 		                                        </li>
+
 	                                        </td>
 	                                        <td style="border:1px solid #ADADAD;" width="20%" valign="top" >
 		                                        <li>
@@ -361,7 +359,9 @@
 			                                                        bundle="${resword}"/>:</b>
 			                                        <c:out value="${age}"/>
 		                                        </li>
+
 		                                        <li>
+			                                        <%--逻辑未出错--%>
 			                                        <c:if test="${study.studyParameterConfig.collectDob != '3'}">
 				                                        <c:choose>
 					                                        <c:when test="${study.studyParameterConfig.collectDob =='1'}">
@@ -389,23 +389,22 @@
 				                                        <%-->> --%>
 			                                        </c:if>
 		                                        </li>
+
 		                                        <c:choose>
 		                                        <c:when test="${study.studyParameterConfig.personIdShownOnCRF == 'true'}">
-	                                        <li>
+
+	                                             <li>
 		                                        <b><fmt:message key="person_ID"
 		                                                        bundle="${resword}"/>:</b>
 		                                        <c:out value="${subject.uniqueIdentifier}"/>
                                             </li>
-	                                        </c:when>
-	                                        <c:otherwise>
-		                                        <td class="table_cell"></td>
-		                                        <td class="table_cell_left"></td>
-	                                        </c:otherwise>
-	                                        </c:choose>
+
+		                                        </c:when>
+		                                        </c:choose>
 	                                        </td>
                                         </tr>
 
-
+										<%--作用未知--%>
 										<c:forEach var="frmMsg" items="${formMessages}">
 											<c:if test="${frmMsg.key eq 'interviewer'}">
 												<c:set var="isInError_Int"
@@ -417,6 +416,7 @@
 											</c:if>
 										</c:forEach>
 
+										<%--作用未知--%>
 										<tr>
 											<td class="table_cell_left" nowrap>
 												<c:if test="${study.studyParameterConfig.interviewerNameRequired != 'not_used'}">
@@ -568,171 +568,176 @@
 												</c:if>
 											</td>
 
-											<td class="table_cell" nowrap>
-												<c:if test="${study.studyParameterConfig.interviewDateRequired != 'not_used'}">
-													<c:choose>
-														<c:when test="${isInError_Dat}">
-															<fmt:message
-																	key="interview_date"
-																	bundle="${resword}"/>:
-															<span class="aka_exclaim_error">! </span>&nbsp;<br />
-															<%--(<fmt:message key="date_format" bundle="${resformat}"/>)--%>
-														</c:when>
-														<c:otherwise>
-															<fmt:message
-																	key="interview_date"
-																	bundle="${resword}"/>:
-															<c:if test="${study.studyParameterConfig.interviewDateRequired=='yes'}">
-																*
-															</c:if>&nbsp;<br />
-															<%--(<fmt:message key="date_format" bundle="${resformat}"/>)--%>
-														</c:otherwise>
-													</c:choose>
-												</c:if>
-											</td><!--</a>-->
-											<td class="table_cell_left">
-												<c:if test="${study.studyParameterConfig.interviewDateRequired != 'not_used'}">
-													<table border="0" cellpadding="0" cellspacing="0">
+											<c:if test="${study.studyParameterConfig.interviewDateRequired != 'not_used'}">
+												<td class="table_cell" nowrap>
 
-														<tr>
-																<%----%>
-															<td valign="top">
-																<c:choose>
-																<c:when
-																		test="${study.studyParameterConfig.interviewDateEditable=='true'}">
-																<c:choose>
-																<c:when test="${isInError_Dat}">
-																<div class="aka_input_error">
-																	<label for="interviewDate"></label>
-																	<input id="interviewDate"
-																	       type="text"
-																	       name="interviewDate"
-																	       size="15"
-																	       value="<c:out value="${interviewDate}" />"
-																	       class="aka_input_error">
-																	</c:when>
-																	<c:otherwise>
-																	<div class="formfieldM_BG">
+														<c:choose>
+															<c:when test="${isInError_Dat}">
+																<fmt:message
+																		key="interview_date"
+																		bundle="${resword}"/>:
+																<span class="aka_exclaim_error">! </span>&nbsp;<br />
+																<%--(<fmt:message key="date_format" bundle="${resformat}"/>)--%>
+															</c:when>
+															<c:otherwise>
+																<fmt:message
+																		key="interview_date"
+																		bundle="${resword}"/>:
+																<c:if test="${study.studyParameterConfig.interviewDateRequired=='yes'}">
+																	*
+																</c:if>&nbsp;<br />
+																<%--(<fmt:message key="date_format" bundle="${resformat}"/>)--%>
+															</c:otherwise>
+														</c:choose>
+
+												</td><!--</a>-->
+											</c:if>
+
+											<c:if test="${study.studyParameterConfig.interviewDateRequired != 'not_used'}">
+												<td class="table_cell_left">
+
+														<table border="0" cellpadding="0" cellspacing="0">
+
+															<tr>
+																	<%----%>
+																<td valign="top">
+																	<c:choose>
+																	<c:when
+																			test="${study.studyParameterConfig.interviewDateEditable=='true'}">
+																	<c:choose>
+																	<c:when test="${isInError_Dat}">
+																	<div class="aka_input_error">
+																		<label for="interviewDate"></label>
 																		<input id="interviewDate"
 																		       type="text"
 																		       name="interviewDate"
 																		       size="15"
 																		       value="<c:out value="${interviewDate}" />"
-																		       class="formfieldM">
-																		</c:otherwise>
-																		</c:choose>
+																		       class="aka_input_error">
 																		</c:when>
 																		<c:otherwise>
 																		<div class="formfieldM_BG">
 																			<input id="interviewDate"
 																			       type="text"
-																			       disabled
+																			       name="interviewDate"
 																			       size="15"
 																			       value="<c:out value="${interviewDate}" />"
 																			       class="formfieldM">
-																			<input type="hidden"
-																			       name="interviewDate"
-																			       value="<c:out value="${interviewDate}" />">
 																			</c:otherwise>
 																			</c:choose>
+																			</c:when>
+																			<c:otherwise>
+																			<div class="formfieldM_BG">
+																				<input id="interviewDate"
+																				       type="text"
+																				       disabled
+																				       size="15"
+																				       value="<c:out value="${interviewDate}" />"
+																				       class="formfieldM">
+																				<input type="hidden"
+																				       name="interviewDate"
+																				       value="<c:out value="${interviewDate}" />">
+																				</c:otherwise>
+																				</c:choose>
 
-																		</div>
-																			<%-- BWP>>new error message design: <jsp:include page="../showMessage.jsp">
-																			  <jsp:param name="key" value="interviewDate" />
-																			</jsp:include>--%>
-															</td>
-																<%--        document.getElementById('testdiv1').style.top=(parseInt(document.getElementById('testdiv1').style.top) - 10)+'px'; --%>
-															<td valign="top" nowrap>
+																			</div>
+																				<%-- BWP>>new error message design: <jsp:include page="../showMessage.jsp">
+																				  <jsp:param name="key" value="interviewDate" />
+																				</jsp:include>--%>
+																</td>
+																	<%--        document.getElementById('testdiv1').style.top=(parseInt(document.getElementById('testdiv1').style.top) - 10)+'px'; --%>
+																<td valign="top" nowrap>
 
-																<a href="#">
-																	<img src="<c:out value="${contextPath}" />/images/bt_Calendar.gif"
-																	     alt="<fmt:message key="show_calendar" bundle="${resword}"/>"
-																	     title="<fmt:message key="show_calendar" bundle="${resword}"/>"
-																	     border="0"
-																	     id="interviewDateTrigger"/></a>
-																<script type="text/javascript">
-                                                                    Calendar.setup({
-                                                                        inputField: "interviewDate",
-                                                                        ifFormat: "<fmt:message key="date_format_calender" bundle="${resformat}"/>",
-                                                                        button: "interviewDateTrigger"
-                                                                    });
-																</script>
+																	<a href="#">
+																		<img src="<c:out value="${contextPath}" />/images/bt_Calendar.gif"
+																		     alt="<fmt:message key="show_calendar" bundle="${resword}"/>"
+																		     title="<fmt:message key="show_calendar" bundle="${resword}"/>"
+																		     border="0"
+																		     id="interviewDateTrigger"/></a>
+																	<script type="text/javascript">
+	                                                                    Calendar.setup({
+	                                                                        inputField: "interviewDate",
+	                                                                        ifFormat: "<fmt:message key="date_format_calender" bundle="${resformat}"/>",
+	                                                                        button: "interviewDateTrigger"
+	                                                                    });
+																	</script>
 
-																<c:if test="${study.studyParameterConfig.discrepancyManagement=='true' && !study.status.locked}">
-																	<%-- ViewDiscrepancyNote?writeToDB=1&subjectId=<c:out value="${discrepancyNote.subjectId}"/>&itemId=<c:out value="${item.id}"/>&id=<c:out value="${discrepancyNote.entityId}"/>&name=<c:out value="${discrepancyNote.entityType}"/>&field=<c:out value="${discrepancyNote.field}"/>&column=<c:out value="${discrepancyNote.column}"/>&enterData=<c:out value="${enterData}"/>&monitor=<c:out value="${monitor}"/>&blank=<c:out value="${blank}"/>" --%>
-																	<%--BWP: 2808 related>>
-																	and switched it back for 2898--%>
-																	<%-- <c:if test="${! (enclosingPage eq 'viewSectionData')}">--%>
-																<c:set var="isNewDNDate"
-																       value="${hasDateNote eq 'yes' ? 0 : 1}"/>
-																<c:choose>
-																	<c:when test="${IntrvDateNoteResStatus == 0}">
-																		<c:set var="imageFileName"
-																		       value="icon_noNote"/>
-																	</c:when>
-																	<c:when test="${IntrvDateNoteResStatus == 1}">
-																		<c:set var="imageFileName"
-																		       value="icon_Note"/>
-																	</c:when>
-																	<c:when test="${IntrvDateNoteResStatus == 2}">
-																		<c:set var="imageFileName"
-																		       value="icon_flagYellow"/>
-																	</c:when>
-																	<c:when test="${IntrvDateNoteResStatus == 3}">
-																		<c:set var="imageFileName"
-																		       value="icon_flagGreen"/>
-																	</c:when>
-																	<c:when test="${IntrvDateNoteResStatus == 4}">
-																		<c:set var="imageFileName"
-																		       value="icon_flagBlack"/>
-																	</c:when>
-																	<c:when test="${IntrvDateNoteResStatus == 5}">
-																		<c:set var="imageFileName"
-																		       value="icon_flagWhite"/>
-																	</c:when>
-																	<c:otherwise>
-																	</c:otherwise>
-																</c:choose>
+																	<c:if test="${study.studyParameterConfig.discrepancyManagement=='true' && !study.status.locked}">
+																		<%-- ViewDiscrepancyNote?writeToDB=1&subjectId=<c:out value="${discrepancyNote.subjectId}"/>&itemId=<c:out value="${item.id}"/>&id=<c:out value="${discrepancyNote.entityId}"/>&name=<c:out value="${discrepancyNote.entityType}"/>&field=<c:out value="${discrepancyNote.field}"/>&column=<c:out value="${discrepancyNote.column}"/>&enterData=<c:out value="${enterData}"/>&monitor=<c:out value="${monitor}"/>&blank=<c:out value="${blank}"/>" --%>
+																		<%--BWP: 2808 related>>
+																		and switched it back for 2898--%>
+																		<%-- <c:if test="${! (enclosingPage eq 'viewSectionData')}">--%>
+																	<c:set var="isNewDNDate"
+																	       value="${hasDateNote eq 'yes' ? 0 : 1}"/>
+																	<c:choose>
+																		<c:when test="${IntrvDateNoteResStatus == 0}">
+																			<c:set var="imageFileName"
+																			       value="icon_noNote"/>
+																		</c:when>
+																		<c:when test="${IntrvDateNoteResStatus == 1}">
+																			<c:set var="imageFileName"
+																			       value="icon_Note"/>
+																		</c:when>
+																		<c:when test="${IntrvDateNoteResStatus == 2}">
+																			<c:set var="imageFileName"
+																			       value="icon_flagYellow"/>
+																		</c:when>
+																		<c:when test="${IntrvDateNoteResStatus == 3}">
+																			<c:set var="imageFileName"
+																			       value="icon_flagGreen"/>
+																		</c:when>
+																		<c:when test="${IntrvDateNoteResStatus == 4}">
+																			<c:set var="imageFileName"
+																			       value="icon_flagBlack"/>
+																		</c:when>
+																		<c:when test="${IntrvDateNoteResStatus == 5}">
+																			<c:set var="imageFileName"
+																			       value="icon_flagWhite"/>
+																		</c:when>
+																		<c:otherwise>
+																		</c:otherwise>
+																	</c:choose>
 
-																<c:choose>
-																<c:when test="${hasDateNote eq 'yes'}">
-																<a href="#"
-																   onmouseover="callTip(genToolTipFromArray('dateNotes') );"
-																   onmouseout="UnTip();"
-																   onClick="openDNoteWindow('ViewDiscrepancyNote?writeToDB=1&subjectId=${studySubject.id}&itemId=${itemId}&id=${InterviewerDateNote.eventCRFId}&name=${InterviewerDateNote.entityType}&field=interviewDate&column=${InterviewerDateNote.column}&enterData=${enterData}&monitor=${monitor}&blank=${blank}','spanAlert-interviewDate'); return false;">
-																	<img id="flag_interviewDate"
-																	     name="flag_interviewDate"
-																	     src="<c:out value="${contextPath}" />/images/<c:out value="${imageFileName}"/>.gif"
-																	     border="0"
-																	     alt="<fmt:message key="discrepancy_note" bundle="${resword}"/>">
-																	</c:when>
-																	<c:otherwise>
+																	<c:choose>
+																	<c:when test="${hasDateNote eq 'yes'}">
 																	<a href="#"
 																	   onmouseover="callTip(genToolTipFromArray('dateNotes') );"
 																	   onmouseout="UnTip();"
-																	   onClick="openDNoteWindow('CreateDiscrepancyNote?subjectId=${studySubject.id}&id=
-																		   <c:out value="${toc.eventCRF.id}"/>&name=eventCrf&field=interviewDate&column=date_interviewed&writeToDB=1&new=${isNewDNDate}','spanAlert-interviewDate'); return false;">
+																	   onClick="openDNoteWindow('ViewDiscrepancyNote?writeToDB=1&subjectId=${studySubject.id}&itemId=${itemId}&id=${InterviewerDateNote.eventCRFId}&name=${InterviewerDateNote.entityType}&field=interviewDate&column=${InterviewerDateNote.column}&enterData=${enterData}&monitor=${monitor}&blank=${blank}','spanAlert-interviewDate'); return false;">
 																		<img id="flag_interviewDate"
 																		     name="flag_interviewDate"
-																		     src="<c:out value="${contextPath}" />/images/icon_noNote.gif"
+																		     src="<c:out value="${contextPath}" />/images/<c:out value="${imageFileName}"/>.gif"
 																		     border="0"
 																		     alt="<fmt:message key="discrepancy_note" bundle="${resword}"/>">
-																		</c:otherwise>
-																		</c:choose>
-																	</a>
-																		<%--  </c:if>--%>
-																	</c:if>
-															</td>
-														</tr>
-														<tr>
-															<td valign="top">
-                                                                    <span ID="spanAlert-interviewDate"
-                                                                          class="alert"></span>
-															</td>
-														</tr>
-													</table>
-												</c:if>
-											</td>
+																		</c:when>
+																		<c:otherwise>
+																		<a href="#"
+																		   onmouseover="callTip(genToolTipFromArray('dateNotes') );"
+																		   onmouseout="UnTip();"
+																		   onClick="openDNoteWindow('CreateDiscrepancyNote?subjectId=${studySubject.id}&id=
+																			   <c:out value="${toc.eventCRF.id}"/>&name=eventCrf&field=interviewDate&column=date_interviewed&writeToDB=1&new=${isNewDNDate}','spanAlert-interviewDate'); return false;">
+																			<img id="flag_interviewDate"
+																			     name="flag_interviewDate"
+																			     src="<c:out value="${contextPath}" />/images/icon_noNote.gif"
+																			     border="0"
+																			     alt="<fmt:message key="discrepancy_note" bundle="${resword}"/>">
+																			</c:otherwise>
+																			</c:choose>
+																		</a>
+																			<%--  </c:if>--%>
+																		</c:if>
+																</td>
+															</tr>
+															<tr>
+																<td valign="top">
+	                                                                    <span ID="spanAlert-interviewDate"
+	                                                                          class="alert"></span>
+																</td>
+															</tr>
+														</table>
+
+												</td>
+											</c:if>
 										</tr>
 
 										<tr>
@@ -742,26 +747,30 @@
 
 										</tr>
 
-                                <table width="96%">
+                                <table width="100%">
 										<tr>
 													<td valign="top" align="center"
 													    style="border:1px solid #ADADAD;color:#CC0000;"
-													    width="20%"><fmt:message
+													    width="20%">
+														<fmt:message
 															key="open"
 															bundle="${resword}"/></td>
 													<td valign="top" align="center"
 													    style="border:1px solid #ADADAD;color:#B8860B;"
-													    width="20%"><fmt:message
+													    width="20%">
+														<fmt:message
 															key="updated"
 															bundle="${resword}"/></td>
 													<td valign="top" align="center"
 													    style="border:1px solid #ADADAD;color:#218868;"
-													    width="20%"><fmt:message
+													    width="20%">
+														<fmt:message
 															key="resolved"
 															bundle="${resword}"/></td>
 													<td valign="top" align="center"
 													    style="border:1px solid #ADADAD;color:black;"
-													    width="20%"><fmt:message
+													    width="20%">
+														<fmt:message
 															key="closed"
 															bundle="${resword}"/></td>
 													<td valign="top" align="center"
@@ -795,29 +804,15 @@
                                 </table>
 						</table>
 
-
-									<%--被注释的部分--%>
-									<b>
-										<%--</div>--%>
-
-										<%--</div>--%>
-										<%--</div>--%>
-										<%--</div>--%>
-										<%--</div>--%>
-										<%--</div>--%>
-										<%--</div>--%>
-										<%--</div>--%>
-									</b>
-
 								</td>
 							</tr>
 
 
 						</table>
-					</td>
-				</tr>
-			</table>
+					<%--</td>--%>
+				<%--</tr>--%>
+			<%--</table>--%>
 		<%--</td>--%>
-	</tr>
-</table>
+	<%--</tr>--%>
+<%--</table>--%>
 
