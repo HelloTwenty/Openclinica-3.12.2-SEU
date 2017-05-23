@@ -247,15 +247,15 @@
 				<c:otherwise>
 
 					<%--CRF表信息关闭时--%>
-				<%--<tr id="CRF_infobox_closed">
-					<td style="padding-top: 3px; padding-left: 6px; width: 250px;" nowrap>
-						<a href="javascript:leftnavExpand('CRF_infobox_closed'); leftnavExpand('CRF_infobox_open');">
-							<img src="<c:out value="${contextPath}" />/images/sidebar_expand.gif" align="left"
-							     border="0" hspace="10">
-							<b><fmt:message key="CRF_info" bundle="${resword}"/></b>
-						</a>
-					</td>
-				</tr>--%>
+					<%--<tr id="CRF_infobox_closed">
+						<td style="padding-top: 3px; padding-left: 6px; width: 250px;" nowrap>
+							<a href="javascript:leftnavExpand('CRF_infobox_closed'); leftnavExpand('CRF_infobox_open');">
+								<img src="<c:out value="${contextPath}" />/images/sidebar_expand.gif" align="left"
+									 border="0" hspace="10">
+								<b><fmt:message key="CRF_info" bundle="${resword}"/></b>
+							</a>
+						</td>
+					</tr>--%>
 
 					<%--CRF表信息开启时--%>
 <%--				<tr id="CRF_infobox_open" >

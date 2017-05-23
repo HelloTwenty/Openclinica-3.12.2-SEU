@@ -42,7 +42,6 @@
         var checkboxObject;
 
 	</script>
-
 	<script type="text/JavaScript" language="JavaScript" src="includes/global_functions_javascript.js"></script>
 	<script type="text/JavaScript" language="JavaScript" src="includes/Tabs.js"></script>
 	<script type="text/JavaScript" language="JavaScript" src="includes/CalendarPopup.js"></script>
@@ -69,7 +68,7 @@
 
 <%--<c:import url="../submit/showItemInputToolTipsJS.jsp"></c:import>--%>
 
-<div id="centralContainer"  class="container" width="100%">
+<div id="centralContainer"  class="container-fluid" width="100%">
 
 
 	<%-- set button text depending on whether or not the user is confirming values --%>
@@ -86,11 +85,10 @@
 
 	<%--只与本页标题 --%>
 	<div class="jumbotron" style="padding-bottom: 0px; padding-top: 2%; margin-bottom: 0px;text-align: center">
-		<%--<tr>--%>
-			<%--<td>--%>
-				<h1><span class="text-center" > <b> <c:out
-						value="${toc.crf.name}  "/> <c:out
-						value="${toc.crfVersion.name}"/>
+
+				<h1><span class="text-center" > <b>
+					<c:out value="${toc.crf.name}  "/>
+					<c:out value="${toc.crfVersion.name}"/>
                 <c:choose>
 	                <c:when test="${eventCRF.stage.initialDE}">
                         <img src="images/icon_InitialDE.gif"
@@ -135,21 +133,22 @@
 	                <c:otherwise>
 	                </c:otherwise>
                 </c:choose>
-            </b>  &nbsp;&nbsp; </span>
+				</b>  &nbsp;&nbsp; </span>
 				</h1>
-			<%--</td>--%>
 
-			<%--<td>--%>
-				<%--<h1><span class="title_manage" style="font-size:24px;"> <c:out value="${studySubject.label}"/>&nbsp;&nbsp; </span>--%>
-				<%--</h1>--%>
-			<%--</td>--%>
 
-		<%--</tr>--%>
+				<h1>
+					<span class="title_manage" style="font-size:24px;">
+						<c:out value="${studySubject.label}"/>&nbsp;&nbsp;
+					</span>
+				</h1>
+
+
 	</div>
 	<%--the tabId default value is set in DataEntryServlet.getInputBeans()--%>
 
 	<%--标题下CRF信息--%>
-		<div class="jumbotron" style="background-color: #B6C4CF;padding-bottom: 1px;padding-top: 1px;padding-left: -;padding-left:;padding-left: 0px;padding-right: 0px;margin-bottom: 0px;">
+		<div class="jumbotron" style="background-color: #B6C4CF;padding-bottom: 1px;padding-top: 1px;padding-left:0px;padding-right: 0px;margin-bottom: 0px;">
 			<c:import url="interviewer.jsp">
 				<c:param name="hasNameNote" value="${hasNameNote}"/>
 				<c:param name="hasDateNote" value="${hasDateNote}"/>
@@ -158,75 +157,105 @@
 
 
 	<!--InitialDataEntry  inputs-->
-	<div id="mainForm" name="crfForm" method="post" action="InitialDataEntry" class="form-inline">
+	<form id="mainForm" name="crfForm" method="post" action="InitialDataEntry" class="form-inline">
 
-		<%--2017-5-14 注释后无影响--%>
-		<%--<input class="form-control" type="hidden" name="eventCRFId" value="<c:out value="${section.eventCRF.id} + a"/>" />--%>
-		<%--<input type="hidden" name="sectionId" value="<c:out value="${section.section.id} + b"/>" />--%>
-		<%--<input type="hidden" name="checkInputs" value="<c:out value="${checkInputsValue} + c"/>" />--%>
-		<%--<input type="hidden" name="tab" value="<c:out value="${tabId} + d"/>" />--%>
-		<%--&lt;%&ndash; We have to feed this value to the method giveFirstElementFocus()&ndash;%&gt;--%>
-		<%--<input id="formFirstField" type="hidden" name="formFirstField" value="${requestScope['formFirstField']} + e" />--%>
-		<%--<input type="hidden" name="exitTo" value="${exitTo} + f" />--%>
-		<%--<input type="hidden" name="sectionId" value="<c:out value="${section.section.id} + g"/>" />--%>
-		<%--<input type="hidden" name="isFirstTimeOnSection" value="<c:out value="${section.section.id} + h"/>" />--%>
-		<%--2017-5-14 注释后无影响--%>
+		<input type="hidden" name="eventCRFId" value="<c:out value="${section.eventCRF.id}"/>" />
+		<input type="hidden" name="sectionId" value="<c:out value="${section.section.id}"/>" />
+		<input type="hidden" name="checkInputs" value="<c:out value="${checkInputsValue}"/>" />
+		<input type="hidden" name="tab" value="<c:out value="${tabId}"/>" />
+		<%-- We have to feed this value to the method giveFirstElementFocus()--%>
+		<input id="formFirstField" type="hidden" name="formFirstField" value="${requestScope['formFirstField']}" />
+		<input type="hidden" name="exitTo" value="${exitTo}" />
+		<input type="hidden" name="sectionId" value="<c:out value="${section.section.id}"/>" />
+		<input type="hidden" name="isFirstTimeOnSection" value="<c:out value="${section.section.id}"/>" />
 
 		<%--FF: ${requestScope['formFirstField']}<br />--%>
 
+		<%--可能与保存退出按钮有关--%>
+		<input type="hidden" name="submitted" value="1"/>
 
-		<%--2017-5-14 注释后无影响--%>
-		<%--<script type="text/javascript" language="JavaScript">--%>
-		<%--// <![CDATA[--%>
-		<%--function getSib(theSibling){--%>
-		<%--var sib;--%>
-		<%--do {--%>
-		<%--sib  = theSibling.previousSibling;--%>
-		<%--if(sib.nodeType != 1){--%>
-		<%--theSibling = sib;--%>
-		<%--}--%>
-		<%--} while(! (sib.nodeType == 1))--%>
+		<script type="text/javascript" language="JavaScript">
+            <!--
+            function checkSectionStatus() {
+                closing = false;
+                objImage = document.getElementById('status_top');
 
-		<%--return sib;--%>
-		<%--}--%>
+                if (objImage != null && objImage.src.indexOf('images/icon_UnsavedData.gif') > 0) {
+                    return confirm('<fmt:message key="you_have_unsaved_data2" bundle="${resword}"/>');
+                }
+                return true;
+            }
 
-		<%--function getFocused(f){--%>
-		<%--var v = document.getElementById(f);--%>
-		<%--v.focus();--%>
-		<%--}--%>
 
-		<%--// ]]>--%>
+            function checkEntryStatus(strImageName) {
 
-		<%--function disableSubmit() {--%>
-		<%--var srh = document.getElementById('srh');--%>
-		<%--var srl = document.getElementById('srl');--%>
-		<%--var seh = document.getElementById('seh');--%>
-		<%--var sel = document.getElementById('sel');--%>
-		<%--srh.disabled = true;--%>
-		<%--srl.disabled = true;--%>
-		<%--seh.disabled = true;--%>
-		<%--sel.disabled = true;--%>
-		<%--}--%>
-		<%--</script>--%>
-		<%--2017-5-14 注释后无影响--%>
+                closing = false;
+                objImage = MM_findObj(strImageName);
 
+
+                objImage = null;
+                window.alert(objImage);
+                //alert(objImage.src);
+                if (objImage != null && objImage.src.indexOf('images/icon_UnsavedData.gif') > 0) {
+                    return confirm('<fmt:message key="you_have_unsaved_data_exit" bundle="${resword}"/>');
+                }
+                return true;
+            }
+            //-->
+		</script>
+
+		<c:set var="stage" value="${param.stage}"/>
+
+		<script type="text/javascript" language="JavaScript">
+            // <![CDATA[
+            function getSib(theSibling){
+                var sib;
+                do {
+                    sib  = theSibling.previousSibling;
+                    if(sib.nodeType != 1){
+                        theSibling = sib;
+                    }
+                } while(! (sib.nodeType == 1))
+
+                return sib;
+            }
+
+            function getFocused(f){
+                var v = document.getElementById(f);
+                v.focus();
+            }
+
+            // ]]>
+
+            function disableSubmit() {
+                window.alert("save");
+                var srh = document.getElementById('srh');
+                var srl = document.getElementById('srl');
+                var seh = document.getElementById('seh');
+                var sel = document.getElementById('sel');
+                srh.disabled = true;
+                srl.disabled = true;
+                seh.disabled = true;
+                sel.disabled = true;
+            }
+		</script>
 
 		<!--<br><br>-->
 		<%--<br />--%>
 		<%--I don't think we need this segment to accompany the existing error messages:--%>
 		<%-- need to put this back, otherwise, error msg from 'mark complete' cannot show--%>
+
+		<%--保存后的提示信息--%>
 		<c:if test="${!empty pageMessages}">
-			<div class="alert">
+			<div style="text-align:left;width:100%;font-size:16px;margin-top:2%;">
 				<c:forEach var="message" items="${pageMessages}">
-					<c:out value="${message} + Hello" escapeXml="false"/>
-					<br><br>
+					<b class="text-success"><c:out value="${message}" escapeXml="false"/></b>
 				</c:forEach>
 			</div>
 		</c:if>
 
-
-			<%--选项标题栏--%>
 		<c:set var="sectionNum" value="0"/>
+
 		<c:forEach var="section" items="${toc.sections}">
 			<c:set var="sectionNum" value="${sectionNum+1}"/>
 		</c:forEach>
@@ -257,7 +286,7 @@
 			</div>
 		</c:if><%-- error messages are not null --%>
 
-		<div id="box" class="dialog" style="display:none;">
+		<div id="box" class="dialog" style="display: none;">
             <span id="mbm">
                 <c:choose>
 	                <c:when test="${section.eventDefinitionCRF.electronicSignature == true}">
@@ -276,30 +305,121 @@
 			</div>
 		</div>
 
-
-		<!-- section tabs here -->
-		<table class="table" style="margin: 1%;background-color: white;text-align: center;" border="2" cellspacing="0" width="100%">
+		<%--中部的按钮--%>
+		<table class="table table-bordered" style="background-color: white; width: 100%;margin-bottom: 0px">
+			<%--中部保存按钮--%>
 			<tr>
-				<%-- if only one section show no arrows & section jump --%>
-				<c:if test="${fn:length(toc.sections) gt 1}">
+				<c:choose>
+					<c:when test="${stage !='adminEdit' && section.lastSection}">
+						<c:choose>
+							<c:when test="${section.eventDefinitionCRF.electronicSignature == true}">
+								<td valign="bottom" style="width:50%; text-align: right;padding-top: 1%;padding-bottom: 1%;color: black">
+									<input type="checkbox"
+										   id="markCompleteId"
+										   name="markComplete"
+										   value="Yes"
+									<c:if test="${markComplete=='Yes'}"> checked </c:if>
+										   onclick="sm('box', this, 730,100);">
+									&nbsp;
+									<fmt:message
+											key="mark_CRF_complete"
+											bundle="${resword}"/>&nbsp;&nbsp;&nbsp;
+								</td>
+							</c:when>
+							<c:otherwise>
+								<td valign="bottom" style="width:40%; text-align: right;padding-top: 1%;padding-bottom: 1%;color: black">
+									<input type="checkbox"
+										   id="markCompleteId"
+										   name="markComplete"
+										   value="Yes"
+									<c:if test="${markComplete=='Yes'}"> checked </c:if>
+										   onclick="displayMessageFromCheckbox(this, '<fmt:message key="marking_CRF_complete_finalize_DE" bundle="${restext}"/>')">
+									&nbsp;
+									<fmt:message key="mark_CRF_complete" bundle="${resword}"/>
+									&nbsp;&nbsp;&nbsp;
+								</td>
+							</c:otherwise>
+						</c:choose>
+					</c:when>
+					<c:otherwise>
+						<td colspan="2" width="40%">
+							&nbsp;
+						</td>
+					</c:otherwise>
+				</c:choose>
 
-					<td align="right" valign="middle" style="padding-left: 12px; display: none" id="TabsBack">
-						<a href="javascript:TabsBack()"><img src="images/arrow_back.gif" border="0"
-						                                     style="margin-top:10px"></a></td>
-					<td align="right" style="padding-left: 12px" id="TabsBackDis">
-						<img src="images/arrow_back_dis.gif" border="0"/></td>
-				</c:if>
+					<%--中部的保存与退出按钮 2017-5-14 修改 引入bootstrap按钮样式 --%>
 
+
+				<td width="60%">
+					<div class="row">
+						<div class="col-md-offset-5 col-md-2 column">
+							<div class="btn-group">
+								<button type="submit"
+								        id="srh"
+								        disabled
+								        name="submittedResume"
+								        class="btn btn-primary"
+								        onclick="disableSubmit(); this.form.submit();">
+									<fmt:message
+											key="save"
+											bundle="${resword}"/>
+								</button>
+
+								<button type="submit"
+								        id="seh"
+								        disabled
+								        name="submittedExit"
+								        class="btn btn-default"
+								        onClick="return checkEntryStatus('DataStatus_top');">
+									<fmt:message
+											key="exit"
+											bundle="${resword}"/>
+
+								</button>
+
+							</div>
+						</div>
+					</div>
+				</td>
+
+
+				<%--<c:choose>
+				<c:when test="${! empty formMessages}">
+					<td valign="bottom" style="align:center">
+						<img name="DataStatus_top"
+							 id="status_top"
+							 alt="<fmt:message key="data_status" bundle="${resword}"/>"
+							 title="<fmt:message key="changed_not_saved" bundle="${restext}"/>"
+							 src="images/icon_UnsavedData.gif">
+					</td>
+				</c:when>
+				<c:otherwise>
+					<td valign="bottom"  style="align:center">
+						<img name="DataStatus_top"
+							 id="status_top"
+							 alt="<fmt:message key="data_status" bundle="${resword}"/>"
+							 title="<fmt:message key="not_changed_data" bundle="${restext}"/>"
+							 src="images/icon_UnchangedData.gif">
+					</td>
+				</c:otherwise>
+			</c:choose>--%>
+			</tr>
+		</table>
+
+
+		<%--TAB选择区--%>
+		<div class="col-md-12 column" style="width: 100%">
+
+			<ul class="nav nav-tabs">
 				<script type="text/JavaScript" language="JavaScript">
                     <!--
 
                     // Total number of tabs (one for each CRF)
                     var TabsNumber = <c:out value="${sectionNum}"/>;
 
-
                     // Number of tabs to display at a time
                     var TabsShown = 3;
-
 
                     // Labels to display on each tab (name of CRF)
                     var TabLabel = new Array(TabsNumber)
@@ -329,7 +449,7 @@
 
                     selectTabs(${tabId}, ${sectionNum}, 'crfHeaderTabs');
 
-
+					// TAB选择区
                     function DisplaySectionTabs() {
                         TabID = 1;
 
@@ -339,22 +459,22 @@
                             currTabID = <c:out value="${tabId}"/>;
 
                             if (TabID <= TabsShown) {
-                                document.write('<td class="crfHeaderTabs" valign="bottom" id="Tab' + TabID + '">');
+                                document.write('<li class="active" valign="bottom" id="Tab' + TabID + '">');
                             }
                             else {
-                                document.write('<td class="crfHeaderTabs" valign="bottom" id="Tab' + TabID + '">');
+                                document.write('<li class="active" valign="bottom" id="Tab' + TabID + '">');
                             }
                             if (TabID != currTabID) {
-                                document.write('<div id="Tab' + TabID + 'NotSelected" style="display:all"><div class="tab_BG"><div class="tab_L"><div class="tab_R">');
-                                document.write('<a class="tabtext" title="' + TabFullName[(TabID - 1)] + '" href=' + url + ' onclick="return checkSectionStatus();">' + TabLabel[(TabID - 1)] + '</a></div></div></div></div>');
-                                document.write('<div id="Tab' + TabID + 'Selected" style="display:none"><div class="tab_BG_h"><div class="tab_L_h"><div class="tab_R_h"><span class="tabtext">' + TabLabel[(TabID - 1)] + ' </span></div></div></div></div>');
-                                document.write('</td>');
+                                document.write('<li id="Tab' + TabID + 'NotSelected" class="active" style="display:all;border: 1px solid #ADADAD;border-bottom-color:transparent;padding-right: 1%;padding-left: 1%">');
+                                document.write('<a class="tabtext" title="' + TabFullName[(TabID - 1)] + '" href=' + url + ' onclick="return checkSectionStatus();">' + TabLabel[(TabID - 1)] + '</a></li>');
+                                document.write('<li id="Tab' + TabID + 'Selected" style="display:none;border-right: 1px solid #ADADAD;border-bottom-color:transparent;padding-right: 1%;padding-left: 1%" class="active"><span class="tabtext">' + TabLabel[(TabID - 1)] + ' </span></li>');
+//                                document.write('</td>');
                             }
                             else {
-                                document.write('<div id="Tab' + TabID + 'NotSelected" style="display:all"><div class="tab_BG_h"><div class="tab_L_h"><div class="tab_R_h">');
-                                document.write('<span class="tabtext">' + TabLabel[(TabID - 1)] + '</span></div></div></div></div>');
-                                document.write('<div id="Tab' + TabID + 'Selected" style="display:none"><div class="tab_BG_h"><div class="tab_L_h"><div class="tab_R_h"><span class="tabtext">' + TabLabel[(TabID - 1)] + '</span></div></div></div></div>');
-                                document.write('</td>');
+                                document.write('<li id="Tab' + TabID + 'NotSelected" class="active" style="display:all;border: 1px solid #ADADAD;border-bottom-color:transparent;padding-right: 1%;padding-left: 1%">');
+                                document.write('<span class="tabtext">' + TabLabel[(TabID - 1)] + '</span></li>');
+                                document.write('<li id="Tab' + TabID + 'Selected" class="active" style="display:none;border: 1px solid #ADADAD;border-bottom-color:transparent;padding-right: 1%;padding-left: 1%"><span class="tabtext">' + TabLabel[(TabID - 1)] + '</span></li>');
+//                                document.write('</td>');
                             }
 
                             TabID++
@@ -504,13 +624,8 @@
 				<%-- if only one section show no arrows & section jump --%>
 				<c:if test="${fn:length(toc.sections) gt 1}">
 
-					<td align="right" id="TabsNextDis" style="display: none"><img src="images/arrow_next_dis.gif"
-					                                                              border="0"/></td>
-					<td align="right" id="TabsNext"><a href="javascript:TabsForward()"><img src="images/arrow_next.gif"
-					                                                                        border="0" style=
-							                                                                        "margin-top:10px;margin-right:6px"/></a>
-					</td>
-					<td>
+					<%--右边的选择框--%>
+					<li class="active">
 						<div class="formfieldM_BG_noMargin">
 							<select id="sectionTabSelectElement" class="formfieldM" name="sectionName" size="1"
 							        onchange="gotoLink();">
@@ -518,1043 +633,911 @@
 								<option selected>-- <fmt:message key="select_to_jump" bundle="${resword}"/> --</option>
 								<c:forEach var="sec" items="${toc.sections}">
 									<c:set var="tabUrl"
-									       value="InitialDataEntry?eventCRFId=${section.eventCRF.id}&sectionId=${sec.id}&tab=${tabCount}&exitTo=${exitTo}"/>
+									        value="InitialDataEntry?eventCRFId=${section.eventCRF.id}&sectionId=${sec.id}&tab=${tabCount}&exitTo=${exitTo}"/>
 									<option value="<c:out value="${tabUrl}"/>"><c:out value="${sec.name}"/></option>
 									<c:set var="tabCount" value="${tabCount+1}"/>
 								</c:forEach>
 							</select>
 						</div>
-					</td>
-					<%-- if only one section show no arrows & section jump --%>
+					</li>
+
 				</c:if>
-
-			</tr>
-		</table>
-
-			<input type="hidden" name="submitted" value="1"/>
-		<script type="text/javascript" language="JavaScript">
-            <!--
-            function checkSectionStatus() {
-                closing = false;
-                objImage = document.getElementById('status_top');
-                //alert(objImage.src);
-                if (objImage != null && objImage.src.indexOf('images/icon_UnsavedData.gif') > 0) {
-                    return confirm('<fmt:message key="you_have_unsaved_data2" bundle="${resword}"/>');
-                }
-
-                return true;
-            }
+			</ul>
+		</div>
 
 
-            function checkEntryStatus(strImageName) {
-                closing = false;
-                objImage = MM_findObj(strImageName);
-                //alert(objImage.src);
-                if (objImage != null && objImage.src.indexOf('images/icon_UnsavedData.gif') > 0) {
-                    return confirm('<fmt:message key="you_have_unsaved_data_exit" bundle="${resword}"/>');
-                }
-                return true;
-            }
-            //-->
-		</script>
-
-		<c:set var="stage" value="${param.stage}"/>
-		<table border="0" cellpadding="0" cellspacing="0">
+		<%--表格主体--%>
+		<table class="table table-bordered" style="width: 100%;border: 1px solid #ADADAD">
 			<tr>
 				<td>
-					<div style="width:100%">
-						<!-- These DIVs define shaded box borders -->
-						<div class="box_T">
-							<div class="box_L">
-								<div class="box_R">
-									<div class="box_B">
-										<div class="box_TL">
-											<div class="box_TR">
-												<div class="box_BL">
-													<div class="box_BR">
-														<div class="tablebox_center">
-															<c:set var="currPage" value=""/>
-															<c:set var="curCategory" value=""/>
+					<%--<!--   include return to top table-->--%>
+					<%--<!-- Table Contents -->--%>
+					<table class="table table-bordered" style="background-color: white;border: 1px solid #ADADAD" >
+						<c:set var="displayItemNum" value="${0}"/>
+						<c:set var="itemNum" value="${0}"/>
+						<c:set var="numOfTr" value="0"/>
+						<c:set var="numOfDate" value="1"/>
 
-															<!--   include return to top table-->
-															<!-- Table Contents -->
+						<c:if test='${section.section.title != ""}'>
+							<%--标题--%>
+							<tr >
+								<td style="border: 1px solid #ADADAD">
+									<h2><fmt:message key="title" bundle="${resword}"/>
+										:&nbsp;
+										<c:out value="${section.section.title}" escapeXml="false"/>
+									</h2>
+								</td>
+							</tr>
+						</c:if>
 
-															<table border="0" cellpadding="0" cellspacing="0">
-																<c:set var="displayItemNum" value="${0}"/>
-																<c:set var="itemNum" value="${0}"/>
-																<c:set var="numOfTr" value="0"/>
-																<c:set var="numOfDate" value="1"/>
-																<c:if test='${section.section.title != ""}'>
-																	<tr class="aka_stripes">
-																		<td class="aka_header_border"><b><fmt:message
-																				key="title" bundle="${resword}"/>:&nbsp;<c:out
-																				value="${section.section.title}"
-																				escapeXml="false"/></b></td>
-																	</tr>
-																</c:if>
-																<c:if test='${section.section.subtitle != ""}'>
-																	<tr class="aka_stripes">
-																		<td class="aka_header_border"><fmt:message
-																				key="subtitle" bundle="${resword}"/>:&nbsp;<c:out
-																				value="${section.section.subtitle}"
-																				escapeXml="false"/></td>
-																	</tr>
-																</c:if>
-																<c:if test='${section.section.instructions != ""}'>
-																	<tr class="aka_stripes">
-																		<td class="aka_header_border"><fmt:message
-																				key="instructions" bundle="${resword}"/>:&nbsp;<c:out
-																				value="${section.section.instructions}"
-																				escapeXml="false"/></td>
-																	</tr>
-																</c:if>
-																<c:set var="repeatCount" value="1"/>
-																<c:forEach var="displayItem"
-																           items="${section.displayItemGroups}"
-																           varStatus="itemStatus">
-																<!-- found showGroup: <c:out value="${displayItem.itemGroup.groupMetaBean.showGroup}"/> -->
-																<c:if test="${displayItem.itemGroup.groupMetaBean.showGroup}">
-																<c:if test="${displayItemNum ==0}">
-																	<!-- always show the button and page above the first item-->
-																	<!-- to handle the case of no pageNumLabel for all the items-->
-																	<%--  BWP: corrected "column span="2" "--%>
-																	<tr class="aka_stripes">
-																			<%--  <td class="aka_header_border" colspan="2">width="100%"--%>
-																		<td class="aka_header_border" colspan="2">
-																			<table border="0" cellpadding="0"
-																			       cellspacing="0"
-																			       style="margin-bottom: 6px;">
-																				<tr>
+						<c:if test='${section.section.subtitle != ""}'>
+							<tr class="aka_stripes">
+								<td class="aka_header_border"><fmt:message
+										key="subtitle" bundle="${resword}"/>:&nbsp;<c:out
+										value="${section.section.subtitle}"
+										escapeXml="false"/></td>
+							</tr>
+						</c:if>
 
-																					<td valign="bottom" nowrap="nowrap"
-																					    style="padding-right: 50px">
+						<c:if test='${section.section.instructions != ""}'>
+							<%----%>
+							<tr >
+								<td>
+									<fmt:message
+										key="instructions" bundle="${resword}"/>:&nbsp;<c:out
+										value="${section.section.instructions}"
+										escapeXml="false"/>
+								</td>
+							</tr>
+						</c:if>
 
-																						<a name="top"><fmt:message
-																								key="page"
-																								bundle="${resword}"/>:
-																							<c:out value="${displayItem.pageNumberLabel}"
-																							       escapeXml="false"/></a>
-																					</td>
-																					<td align="right" valign="bottom">
-																						<table border="0"
-																						       cellpadding="0"
-																						       cellspacing="0">
-																							<tr>
-																								<c:choose>
-																									<c:when test="${stage !='adminEdit' && section.lastSection}">
-																										<c:choose>
-																											<c:when test="${section.eventDefinitionCRF.electronicSignature == true}">
-																												<td valign="bottom">
-																													<input type="checkbox"
-																													       id="markCompleteId"
-																													       name="markComplete"
-																													       value="Yes"
-																													<c:if test="${markComplete=='Yes'}">
-																													       checked </c:if>
-																													       onclick="sm('box', this, 730,100);">
-																												</td>
-																												<td valign="bottom"
-																												    nowrap="nowrap">
-																													&nbsp;
-																													<fmt:message
-																															key="mark_CRF_complete"
-																															bundle="${resword}"/>&nbsp;&nbsp;&nbsp;
-																												</td>
-																											</c:when>
-																											<c:otherwise>
-																												<td valign="bottom">
-																													<input type="checkbox"
-																													       id="markCompleteId"
-																													       name="markComplete"
-																													       value="Yes"
-																													<c:if test="${markComplete=='Yes'}">
-																													       checked </c:if>
-																													       onclick="displayMessageFromCheckbox(this, '
-																														       <fmt:message
-																																       key="marking_CRF_complete_finalize_DE"
-																																       bundle="${restext}"/>')">
-																												</td>
-																												<td valign="bottom"
-																												    nowrap="nowrap">
-																													&nbsp;
-																													<fmt:message
-																															key="mark_CRF_complete"
-																															bundle="${resword}"/>&nbsp;&nbsp;&nbsp;
-																												</td>
-																											</c:otherwise>
-																										</c:choose>
-																									</c:when>
-																									<c:otherwise>
-																										<td colspan="2">
-																											&nbsp;
-																										</td>
-																									</c:otherwise>
-																								</c:choose>
+						<c:set var="repeatCount" value="1"/>
+						<c:forEach var="displayItem"
+						           items="${section.displayItemGroups}"
+						           varStatus="itemStatus">
+						<!-- found showGroup: <c:out value="${displayItem.itemGroup.groupMetaBean.showGroup}"/> -->
+						<c:if test="${displayItem.itemGroup.groupMetaBean.showGroup}">
 
-																									<%--中部的保存与退出按钮 2017-5-14 修改 引入bootstrap按钮样式 --%>
-																								<td>
-																									<button type="submit"
-																									        id="srh"
-																									        disabled
-																									        name="submittedResume"
-																									        class="btn btn-primary"
-																									        onclick="disableSubmit(); this.form.submit();">
-																										<fmt:message
-																												key="save"
-																												bundle="${resword}"/>
-																									</button>
-																								</td>
-																								<td>
-																									<button type="submit"
-																									        id="seh"
-																									        disabled
-																									        name="submittedExit"
-																									        class="btn btn-default"
-																									        onClick="return checkEntryStatus('DataStatus_top');">
-																										<fmt:message
-																												key="exit"
-																												bundle="${resword}"/>
-																									</button>
-																								</td>
+							<c:if test="${displayItemNum ==0}">
+							<!-- always show the button and page above the first item-->
+							<!-- to handle the case of no pageNumLabel for all the items-->
+							<%--  BWP: corrected "column span="2" "--%>
+								<%--页 不明白其作用--%>
+							<tr >
+								<td valign="bottom" nowrap="nowrap" style="border: 1px solid #ADADAD">
 
+									<a name="top">
+										<h4><fmt:message key="page" bundle="${resword}"/> :</h4>
+										<c:out value="${displayItem.pageNumberLabel}" escapeXml="false"/>
+									</a>
+								</td>
+							</tr>
+							</c:if>
 
-																								<c:choose>
-																									<c:when test="${! empty formMessages}">
-																										<td valign="bottom">
-																											<img name="DataStatus_top"
-																											     id="status_top"
-																											     alt="<fmt:message key="data_status" bundle="${resword}"/>"
-																											     title="<fmt:message key="changed_not_saved" bundle="${restext}"/>"
-																											     src="images/icon_UnsavedData.gif">
-																										</td>
-																									</c:when>
-																									<c:otherwise>
-																										<td valign="bottom">
-																											<img name="DataStatus_top"
-																											     id="status_top"
-																											     alt="<fmt:message key="data_status" bundle="${resword}"/>"
-																											     title="<fmt:message key="not_changed_data" bundle="${restext}"/>"
-																											     src="images/icon_UnchangedData.gif">
-																										</td>
-																									</c:otherwise>
-																								</c:choose>
+						<c:if test="${currPage != displayItem.pageNumberLabel && displayItemNum >0}">
+							<!-- show page number and buttons -->
+							<%--  BWP: corrected "column span="2" "  width="100%"--%>
+							<%--未起作用，不知其作用--%>
+							<tr class="aka_stripes">
+								<td class="aka_header_border" colspan="2">
+									<table style="background-color:black;">
+										<tr>
 
-
-																							</tr>
-																						</table>
-																					</td>
-																				</tr>
-																			</table>
-																		</td>
-																	</tr>
-																</c:if>
-
-																<c:if test="${currPage != displayItem.pageNumberLabel && displayItemNum >0}">
-																	<!-- show page number and buttons -->
-																	<%--  BWP: corrected "column span="2" "  width="100%"--%>
-																	<tr class="aka_stripes">
-																		<td class="aka_header_border" colspan="2">
-																			<table border="0" cellpadding="0"
-																			       cellspacing="0"
-																			       style="margin-bottom: 6px;">
-																				<tr>
-
-																					<td valign="bottom" nowrap="nowrap"
-																					    style="padding-right: 50px">
-																						<fmt:message key="page"
-																						             bundle="${resword}"/>:
-																						<c:out value="${displayItem.pageNumberLabel}"
-																						       escapeXml="false"/>
-																					</td>
-																					<td align="right" valign="bottom">
-																						<table border="0"
-																						       cellpadding="0"
-																						       cellspacing="0">
-																							<tr>
-																								<c:choose>
-																									<c:when test="${stage !='adminEdit' && section.lastSection}">
-																										<c:choose>
-																											<c:when test="${section.eventDefinitionCRF.electronicSignature == true}">
-																												<td valign="bottom">
-																													<input type="checkbox"
-																													       id="markCompleteId"
-																													       name="markComplete"
-																													       value="Yes"
-																													<c:if test="${markComplete=='Yes'}">
-																													       checked </c:if>
-																													       onclick="sm('box', this, 730,100);">
-																												</td>
-																												<td valign="bottom"
-																												    nowrap="nowrap">
-																													&nbsp;
-																													<fmt:message
-																															key="mark_CRF_complete"
-																															bundle="${resword}"/>&nbsp;&nbsp;&nbsp;
-																												</td>
-																											</c:when>
-																											<c:otherwise>
-																												<td valign="bottom">
-																													<input type="checkbox"
-																													       id="markCompleteId"
-																													       name="markComplete"
-																													       value="Yes"
-																													<c:if test="${markComplete=='Yes'}">
-																													       checked </c:if>
-																													       onclick="displayMessageFromCheckbox(this,'
-																														       <fmt:message
-																																       key="marking_CRF_complete_finalize_DE"
-																																       bundle="${restext}"/>')">
-																												</td>
-																												<td valign="bottom"
-																												    nowrap="nowrap">
-																													&nbsp;
-																													<fmt:message
-																															key="mark_CRF_complete"
-																															bundle="${resword}"/>&nbsp;&nbsp;&nbsp;
-																												</td>
-																											</c:otherwise>
-																										</c:choose>
-																									</c:when>
-																									<c:otherwise>
-																										<td colspan="2">
-																											&nbsp;
-																										</td>
-																									</c:otherwise>
-																								</c:choose>
-																							</tr>
-																						</table>
-																					</td>
-																				</tr>
-																			</table>
-																		</td>
-																	</tr>
-																	<!-- end of page number and buttons-->
-
-																</c:if>
-
+											<td valign="bottom" nowrap="nowrap"
+											    style="padding-right: 50px">
+												<fmt:message key="page"
+												             bundle="${resword}"/>:
+												<c:out value="${displayItem.pageNumberLabel}"
+												       escapeXml="false"/>
+											</td>
+											<td align="right" valign="bottom">
+												<table width="100%">
+													<tr>
+														<c:choose>
+															<c:when test="${stage !='adminEdit' && section.lastSection}">
 																<c:choose>
-
-																<c:when test="${displayItem.inGroup == true}">
-																	<c:set var="currPage"
-																	       value="${displayItem.pageNumberLabel}"/>
-																	<%-- the section borders property value --%>
-																	<tr>
-																			<%-- place where we need to highlight sections,
-																				one of the error keys should equal the item group's OID --%>
-																		<c:set var="isSectionShown" value="false"/>
-																		<c:forEach var="formMsg"
-																		           items="${formMessages}">
-																			<c:if test="${formMsg.key eq displayItem.itemGroup.itemGroupBean.oid}">
-																				<c:set var="isSectionShown"
-																				       value="true"/>
-																			</c:if>
-																		</c:forEach>
-
-																		<td <c:if
-																				test="${hasShown && isSectionShown}"> class="aka_group_show" </c:if> >
-
-																				<%-- end place where we highlight sections --%>
-																			<c:set var="uniqueId" value="0"/>
-																			<c:set var="repeatParentId"
-																			       value="${displayItem.itemGroup.itemGroupBean.oid}"/>
-
-																			<c:set var="repeatNumber"
-																			       value="${displayItem.itemGroup.groupMetaBean.repeatNum}"/>
-																			<c:choose>
-																				<c:when test="${groupHasData}">
-																					<!-- there are already item data for an item group, repeat number just be 1-->
-																					<c:set var="repeatNumber"
-																					       value="0"/>
-																				</c:when>
-																				<c:when test="${isFirstTimeOnSection == section.section.id}">
-																					<c:set var="repeatNumber"
-																					       value="0"/>
-																				</c:when>
-																				<c:otherwise>
-																					<c:set var="repeatNumber"
-																					       value="${repeatNumber-1}"/>
-																				</c:otherwise>
-
-																			</c:choose>
-
-																			<c:set var="repeatMax"
-																			       value="${displayItem.itemGroup.groupMetaBean.repeatMax}"/>
-																			<c:set var="totalColsPlusSubcols"
-																			       value="0"/>
-																			<c:set var="questionNumber" value=""/>
-																				<%--the itemgroups include a group for orphaned items, in the order they should appear,
-																			but the custom tag uses that, not this jstl code--%>
-																			<c:if test="${! (repeatParentId eq 'Ungrouped')}">
-																				<%-- implement group header--%>
-																				<c:if test="${! (displayItem.itemGroup.groupMetaBean.header eq '')}">
-																					<div class="aka_group_header">
-																						<strong><c:out
-																								value="${displayItem.itemGroup.groupMetaBean.header}"
-																								escapeXml="false"/></strong>
-																					</div>
-																				</c:if>
-																				<table border="0" cellspacing="0"
-																				       cellpadding="0"
-																				       class="aka_form_table"
-																				       width="100%">
-																					<thead>
-																					<tr>
-																							<%-- if there are horizontal checkboxes or radios anywhere in the group...--%>
-																						<c:set var="isHorizontal"
-																						       scope="request"
-																						       value="${false}"/>
-																						<c:forEach var="thItem"
-																						           items="${displayItem.itemGroup.items}">
-																							<!-- found show item: <c:out
-																								value="${thItem.metadata.showItem}"/> -->
-																							<c:if test="${thItem.metadata.showItem}">
-																								<c:set var="questionNumber"
-																								       value="${thItem.metadata.questionNumberLabel}"/>
-																								<%-- We have to add a second row of headers if the response_layout property is
-																							 horizontal for checkboxes. --%>
-																								<c:set var="isHorizontalCellLevel"
-																								       scope="request"
-																								       value="${false}"/>
-																								<c:if test="${thItem.metadata.responseLayout eq 'horizontal' ||
-      thItem.metadata.responseLayout eq 'Horizontal'}">
-																									<c:set var="isHorizontal"
-																									       scope="request"
-																									       value="${true}"/>
-																									<c:set var="isHorizontalCellLevel"
-																									       scope="request"
-																									       value="${true}"/>
-																									<c:set var="optionsLen"
-																									       value="0"/>
-																									<c:forEach
-																											var="optn"
-																											items="${thItem.metadata.responseSet.options}">
-																										<c:set var="optionsLen"
-																										       value="${optionsLen+1}"/>
-																									</c:forEach>
-																								</c:if>
-																								<c:choose>
-
-																									<c:when test="${isHorizontalCellLevel &&
-        (thItem.metadata.responseSet.responseType.name eq 'checkbox' ||
-              thItem.metadata.responseSet.responseType.name eq 'radio')}">
-																										<th colspan="<c:out
-																											value='${optionsLen}'/>" class="aka_headerBackground aka_padding_large aka_cellBorders">
-																										<%-- compute total columns value for the add button row colspan attribute--%>
-																										<c:set var="totalColsPlusSubcols"
-																										       value="${totalColsPlusSubcols + optionsLen}"/>
-																									</c:when>
-
-																									<c:otherwise>
-																										<th class="aka_headerBackground aka_padding_large aka_cellBorders">
-																										<%-- compute total columns value for the add button row colspan attribute--%>
-																										<c:set var="totalColsPlusSubcols"
-																										       value="${totalColsPlusSubcols + 1}"/>
-																									</c:otherwise>
-																								</c:choose>
-
-																								<c:choose>
-																									<c:when test="${thItem.metadata.header == ''}">
-																										<c:if test="${! (empty questionNumber)}">
-																											<span style="margin-right:1em"><c:out
-																													value="${questionNumber}"
-																													escapeXml="false"/></span></c:if><c:out
-																											value="${thItem.metadata.leftItemText}"
-																											escapeXml="false"/>
-																									</c:when>
-																									<c:otherwise>
-																										<c:if test="${! (empty questionNumber)}">
-																											<span style="margin-right:1em"><c:out
-																													value="${questionNumber}"
-																													escapeXml="false"/></span></c:if><c:out
-																											value="${thItem.metadata.header}"
-																											escapeXml="false"/>
-																									</c:otherwise>
-																								</c:choose>
-																								</th>
-																							</c:if>
-																						</c:forEach>
-																						<c:if test="${displayItem.itemGroup.groupMetaBean.repeatingGroup}">
-
-																							<th class="aka_headerBackground aka_padding_large aka_cellBorders"/>
-
-																						</c:if>
-																					</tr>
-																					<c:if test="${isHorizontal}">
-																						<%-- create another row --%>
-																						<tr>
-																							<c:forEach var="thItem"
-																							           items="${displayItem.itemGroup.items}">
-																								<!-- found show item:
-																								<c:out value="${thItem.metadata.showItem}"/> -->
-																								<c:if test="${thItem.metadata.showItem}">
-																									<c:set var="isHorizontalCellLevel"
-																									       scope="request"
-																									       value="${false}"/>
-																									<c:if test="${thItem.metadata.responseLayout eq 'horizontal' ||
-                                                                                            thItem.metadata.responseLayout eq 'Horizontal'}">
-																										<c:set var="isHorizontalCellLevel"
-																										       scope="request"
-																										       value="${true}"/>
-																									</c:if>
-																									<c:choose>
-
-																										<c:when test="${isHorizontalCellLevel &&
-                                                                                (thItem.metadata.responseSet.responseType.name eq 'checkbox' ||
-                                                                                thItem.metadata.responseSet.responseType.name eq 'radio')}">
-
-																											<%--循环产生页面--%>
-																											<c:forEach
-																													var="respOpt"
-																													items="${thItem.metadata.responseSet.options}">
-																												<th class="aka_headerBackground aka_padding_large aka_cellBorders">
-																													<c:out value="${respOpt.text}"/></th>
-																											</c:forEach>
-
-																										</c:when>
-
-																										<c:otherwise>
-																											<th class="aka_headerBackground aka_padding_large aka_cellBorders"/>
-																										</c:otherwise>
-																									</c:choose>
-																								</c:if>
-																							</c:forEach>
-
-																							<th/>
-																						</tr>
-																					</c:if>
-																					</thead>
-
-																					<tbody>
-
-																					<c:set var="uniqueId" value="${0}"/>
-																					<c:set var="repeatRowCount"
-																					       value="0"/>
-
-																					<c:forEach var="bodyItemGroup"
-																					           items="${displayItem.itemGroups}">
-																						<c:set var="repeatRowCount"
-																						       value="${repeatRowCount+1}"/>
-																						<%--<b>Hello World</b>--%>
-																					</c:forEach>
-																					<!-- there are data posted already -->
-
-																					<c:forEach var="bodyItemGroup"
-																					           items="${displayItem.itemGroups}"
-																					           varStatus="status">
-																						<c:set var="columnNum"
-																						       value="1"/>
-																						<!-- hasError is set to true when validation error happens-->
-
-																						<!-- JN: So, the cross button should not be displayed for the items which are present in the -->
-																						<!-- not the last row -->
-																						<tr repeat="0"/>
-																						<c:set var="columnNum"
-																						       value="1"/>
-																						<c:set var="isButtonRemShow"
-																						       value="true"/>
-																						<c:forEach var="bodyItem"
-																						           items="${bodyItemGroup.items}">
-
-
-																							<c:if test="${groupHasData}">
-																								<c:set var="isButtonRemShow"
-																								       value="false"/>
-																							</c:if>
-
-																							<!-- found show item: <c:out
-																								value="${bodyItem.metadata.showItem}"/> -->
-																							<c:choose>
-																								<c:when test="${bodyItem.metadata.showItem}">
-																									<%-- highlighting for items within item groups, tbh --%>
-																									<%-- update td class with aka_group_show if they meet the criteria --%>
-																									<c:set var="isItemShown"
-																									       value="false"/>
-																									<c:forEach
-																											var="formMsg"
-																											items="${formMessages}">
-
-																										<c:set var="inputValue"><c:out
-																												value="${repeatParentId}"/>_<c:out
-																												value="${uniqueId}"/>input<c:out
-																												value="${bodyItem.item.id}"/></c:set>
-																										<c:if test="${formMsg.key eq inputValue}">
-																											<c:set var="isItemShown"
-																											       value="true"/>
-																										</c:if>
-																									</c:forEach>
-																									<c:choose>
-																										<c:when test="${isItemShown && hasShown}">
-																											<c:set var="extraClass"
-																											       value="aka_group_show"/>
-																										</c:when>
-																										<c:otherwise>
-																											<c:set var="extraClass"
-																											       value=" "/>
-																											<%-- do nothing here ? --%>
-																										</c:otherwise>
-																									</c:choose>
-																									<c:set var="itemNum"
-																									       value="${itemNum + 1}"/>
-																									<c:set var="isHorizontalCellLevel"
-																									       scope="request"
-																									       value="${false}"/>
-																									<c:if test="${bodyItem.metadata.responseLayout eq 'horizontal' ||
-      bodyItem.metadata.responseLayout eq 'Horizontal'}">
-																										<c:set var="isHorizontalCellLevel"
-																										       scope="request"
-																										       value="${true}"/>
-																									</c:if>
-																									<c:choose>
-
-																										<c:when test="${isHorizontalCellLevel &&
-           (bodyItem.metadata.responseSet.responseType.name eq 'radio' ||
-           bodyItem.metadata.responseSet.responseType.name eq 'checkbox')}">
-																											<%-- For horizontal checkboxes, radio buttons--%>
-																											<c:forEach
-																													var="respOption"
-																													items="${bodyItem.metadata.responseSet.options}">
-																												<td class="aka_padding_norm aka_cellBorders <c:out value="${extraClass}"/>">
-																													<c:set var="displayItem"
-																													       scope="request"
-																													       value="${bodyItem}"/>
-																													<c:set var="responseOptionBean"
-																													       scope="request"
-																													       value="${respOption}"/>
-																													<c:import
-																															url="../submit/showGroupItemInput.jsp">
-																														<c:param
-																																name="repeatParentId"
-																																value="${repeatParentId}"/>
-																														<c:param
-																																name="rowCount"
-																																value="${uniqueId}"/>
-																														<c:param
-																																name="key"
-																																value="${numOfDate}"/>
-																														<c:param
-																																name="isLast"
-																																value="${false}"/>
-																														<c:param
-																																name="tabNum"
-																																value="${itemNum}"/>
-																														<c:param
-																																name="isHorizontal"
-																																value="${isHorizontalCellLevel}"/>
-																														<c:param
-																																name="defaultValue"
-																																value="${bodyItem.metadata.defaultValue}"/>
-																														<c:param
-																																name="originJSP"
-																																value="initialDataEntry"/>
-																													</c:import>
-																												</td>
-																											</c:forEach>
-																										</c:when>
-
-																										<%-- could be a radio or checkbox that is not horizontal --%>
-																										<c:otherwise>
-																											<td class="aka_padding_norm aka_cellBorders <c:out value="${extraClass}"/>">
-																												<c:set var="displayItem"
-																												       scope="request"
-																												       value="${bodyItem}"/>
-																												<c:import
-																														url="../submit/generateGroupItemTxt.jsp">
-																													<c:param
-																															name="itemId"
-																															value="${bodyItem.item.id}"/>
-																													<c:param
-																															name="inputType"
-																															value="${bodyItem.metadata.responseSet.responseType.name}"/>
-																													<c:param
-																															name="function"
-																															value="${bodyItem.metadata.responseSet.options[0].value}"/>
-																													<c:param
-																															name="linkText"
-																															value="${bodyItem.metadata.leftItemText}"/>
-																													<c:param
-																															name="repeatParentId"
-																															value="${repeatParentId}"/>
-																													<c:param
-																															name="rowCount"
-																															value="${uniqueId}"/>
-																													<c:param
-																															name="isLast"
-																															value="${false}"/>
-																													<c:param
-																															name="side"
-																															value="left"/>
-																												</c:import>
-																												<c:import
-																														url="../submit/showGroupItemInput.jsp">
-																													<c:param
-																															name="repeatParentId"
-																															value="${repeatParentId}"/>
-																													<c:param
-																															name="rowCount"
-																															value="${uniqueId}"/>
-																													<c:param
-																															name="key"
-																															value="${numOfDate}"/>
-																													<c:param
-																															name="isLast"
-																															value="${false}"/>
-																													<c:param
-																															name="tabNum"
-																															value="${itemNum}"/>
-																													<c:param
-																															name="defaultValue"
-																															value="${bodyItem.metadata.defaultValue}"/>
-																													<c:param
-																															name="originJSP"
-																															value="initialDataEntry"/>
-																												</c:import>
-																												<c:import
-																														url="../submit/generateGroupItemTxt.jsp">
-																													<c:param
-																															name="itemId"
-																															value="${bodyItem.item.id}"/>
-																													<c:param
-																															name="inputType"
-																															value="${bodyItem.metadata.responseSet.responseType.name}"/>
-																													<c:param
-																															name="function"
-																															value="${bodyItem.metadata.responseSet.options[0].value}"/>
-																													<c:param
-																															name="linkText"
-																															value="${bodyItem.metadata.rightItemText}"/>
-																													<c:param
-																															name="repeatParentId"
-																															value="${repeatParentId}"/>
-																													<c:param
-																															name="rowCount"
-																															value="${uniqueId}"/>
-																													<c:param
-																															name="isLast"
-																															value="${false}"/>
-																													<c:param
-																															name="side"
-																															value="right"/>
-																												</c:import>
-																											</td>
-																										</c:otherwise>
-																									</c:choose>
-																									<c:set var="columnNum"
-																									       value="${columnNum+1}"/>
-																								</c:when>
-																								<c:when test="${bodyItem.blankDwelt}"><td class="aka_padding_norm aka_cellBorders"></c:when>
-																							</c:choose>
-
-																						</c:forEach>
-																						<c:if test="${displayItem.itemGroup.groupMetaBean.repeatingGroup}">
-
-																							<td class="aka_padding_norm aka_cellBorders">
-																									<%-- check for manual in the input name; if rowCount > 0 then manual
-																							   will be in the name --%>
-																								<c:choose>
-																									<c:when test="${uniqueId ==0}">
-																										<input type="hidden"
-																										       name="<c:out value="${repeatParentId}"/>_<c:out value="${uniqueId}"/>.newRow"
-																										       value="yes">
-																									</c:when>
-																									<c:otherwise>
-																										<input type="hidden"
-																										       name="<c:out value="${repeatParentId}"/>_manual<c:out value="${uniqueId}"/>.newRow"
-																										       value="yes">
-																									</c:otherwise>
-																								</c:choose>
-
-																								<c:if test="${isButtonRemShow == true }">
-																									<button stype="remove"
-																									        type="button"
-																									        template="<c:out value="${repeatParentId}"/> + test_1"
-																									        class="button_remove"></button>
-																								</c:if>
-																							</td>
-
-																						</c:if>
-																						</tr>
-
-																						<c:if test="${status.last}">
-																							<!-- for the last but not the first row and only row, we need to use [] so the repetition javascript can copy it to create new row-->
-																							<tr id="<c:out value="${repeatParentId}"/>"
-																							    repeat="template"
-																							    repeat-start="${repeatNumber}"
-																							    repeat-max="<c:out value="${repeatMax}"/>">
-																								<c:set var="isButtonRemShow"
-																								       value="true"/>
-																								<c:forEach
-																										var="bodyItem"
-																										items="${bodyItemGroup.items}">
-																								<!-- found show item: <c:out value="${bodyItem.metadata.showItem}"/> -->
-
-																								<c:if test="${!empty bodyItem.data}">
-
-																									<c:set var="isButtonRemShow"
-																									       value="false"/>
-																								</c:if>
-
-																								<c:choose>
-																								<c:when test="${bodyItem.metadata.showItem}">
-																									<%-- highlighting for items within item groups, tbh --%>
-																									<%-- update td class with aka_group_show if they meet the criteria --%>
-																									<c:set var="isItemShown"
-																									       value="false"/>
-																									<c:forEach
-																											var="formMsg"
-																											items="${formMessages}">
-
-																										<c:set var="inputValue"><c:out
-																												value="${repeatParentId}"/>_<c:out
-																												value="${uniqueId}"/>input<c:out
-																												value="${bodyItem.item.id}"/></c:set>
-																										<c:if test="${formMsg.key eq inputValue}">
-																											<c:set var="isItemShown"
-																											       value="true"/>
-																											<!-- PASS!
-																											<c:out value="${inputValue}"/> -->
-																										</c:if>
-
-																									</c:forEach>
-
-																									<c:choose>
-																										<c:when test="${isItemShown && hasShown}">
-																											<c:set var="extraClass"
-																											       value="aka_group_show"/>
-																										</c:when>
-																										<c:otherwise>
-																											<c:set var="extraClass"
-																											       value=" "/>
-																											<%-- do nothing here ? --%>
-																										</c:otherwise>
-																									</c:choose>
-																									<%-- end of highlighting for items within item groups, tbh 05/2010--%>
-																									<!-- discrepancy count for this item
-																									<c:out value="${repeatParentId}"/>
-																									<c:out value="${bodyItem.numDiscrepancyNotes}"/> -->
-																									<c:set var="itemNum"
-																									       value="${itemNum + 1}"/>
-																									<c:set var="isHorizontalCellLevel"
-																									       scope="request"
-																									       value="${false}"/>
-																									<c:if test="${bodyItem.metadata.responseLayout eq 'horizontal' ||
-      bodyItem.metadata.responseLayout eq 'Horizontal'}">
-																										<c:set var="isHorizontalCellLevel"
-																										       scope="request"
-																										       value="${true}"/>
-																									</c:if>
-																									<c:choose>
-
-																										<c:when test="${isHorizontalCellLevel &&
-                (bodyItem.metadata.responseSet.responseType.name eq 'radio' ||
-           bodyItem.metadata.responseSet.responseType.name eq 'checkbox')}">
-																											<%-- For horizontal checkboxes, radio buttons--%>
-																											<c:forEach
-																													var="respOption"
-																													items="${bodyItem.metadata.responseSet.options}">
-																												<td class="aka_padding_norm aka_cellBorders <c:out value="${extraClass}"/>">
-																													<c:set var="displayItem"
-																													       scope="request"
-																													       value="${bodyItem}"/>
-																													<c:set var="responseOptionBean"
-																													       scope="request"
-																													       value="${respOption}"/>
-																													<c:import
-																															url="../submit/showGroupItemInput.jsp">
-																														<c:param
-																																name="repeatParentId"
-																																value="${repeatParentId}"/>
-																														<c:param
-																																name="rowCount"
-																																value="${uniqueId}"/>
-																														<c:param
-																																name="key"
-																																value="${numOfDate}"/>
-																														<c:param
-																																name="isLast"
-																																value="${true}"/>
-																														<c:param
-																																name="isNewItem"
-																																value="${true}"/>
-																														<c:param
-																																name="tabNum"
-																																value="${itemNum}"/>
-																														<c:param
-																																name="isHorizontal"
-																																value="${isHorizontalCellLevel}"/>
-																														<c:param
-																																name="defaultValue"
-																																value="${bodyItem.metadata.defaultValue}"/>
-																														<c:param
-																																name="originJSP"
-																																value="initialDataEntry"/>
-
-																													</c:import>
-																												</td>
-																											</c:forEach>
-																										</c:when>
-
-																										<%-- could be a radio or checkbox that is not horizontal --%>
-																										<c:otherwise>
-																											<td class="aka_padding_norm aka_cellBorders <c:out value="${extraClass}"/>">
-																												<c:set var="displayItem"
-																												       scope="request"
-																												       value="${bodyItem}"/>
-																												<c:import
-																														url="../submit/generateGroupItemTxt.jsp">
-																													<c:param
-																															name="itemId"
-																															value="${bodyItem.item.id}"/>
-																													<c:param
-																															name="inputType"
-																															value="${bodyItem.metadata.responseSet.responseType.name}"/>
-																													<c:param
-																															name="function"
-																															value="${bodyItem.metadata.responseSet.options[0].value}"/>
-																													<c:param
-																															name="linkText"
-																															value="${bodyItem.metadata.leftItemText}"/>
-																													<c:param
-																															name="repeatParentId"
-																															value="${repeatParentId}"/>
-																													<c:param
-																															name="rowCount"
-																															value="${uniqueId}"/>
-																													<c:param
-																															name="isLast"
-																															value="${true}"/>
-																													<c:param
-																															name="side"
-																															value="left"/>
-																												</c:import>
-																												<c:import
-																														url="../submit/showGroupItemInput.jsp">
-																													<c:param
-																															name="repeatParentId"
-																															value="${repeatParentId}"/>
-																													<c:param
-																															name="rowCount"
-																															value="${uniqueId}"/>
-																													<c:param
-																															name="key"
-																															value="${numOfDate}"/>
-																													<c:param
-																															name="isLast"
-																															value="${true}"/>
-																													<c:param
-																															name="isNewItem"
-																															value="${true}"/>
-																													<c:param
-																															name="tabNum"
-																															value="${itemNum}"/>
-																													<c:param
-																															name="defaultValue"
-																															value="${bodyItem.metadata.defaultValue}"/>
-																													<c:param
-																															name="originJSP"
-																															value="initialDataEntry"/>
-																												</c:import>
-																												<c:import
-																														url="../submit/generateGroupItemTxt.jsp">
-																													<c:param
-																															name="itemId"
-																															value="${bodyItem.item.id}"/>
-																													<c:param
-																															name="inputType"
-																															value="${bodyItem.metadata.responseSet.responseType.name}"/>
-																													<c:param
-																															name="function"
-																															value="${bodyItem.metadata.responseSet.options[0].value}"/>
-																													<c:param
-																															name="linkText"
-																															value="${bodyItem.metadata.rightItemText}"/>
-																													<c:param
-																															name="repeatParentId"
-																															value="${repeatParentId}"/>
-																													<c:param
-																															name="rowCount"
-																															value="${uniqueId}"/>
-																													<c:param
-																															name="isLast"
-																															value="${true}"/>
-																													<c:param
-																															name="side"
-																															value="right"/>
-																												</c:import>
-																											</td>
-																										</c:otherwise>
-																									</c:choose>
-																									<c:set var="columnNum"
-																									       value="${columnNum+1}"/>
-																								</c:when>
-																								<c:when test="${bodyItem.blankDwelt}">
-																								<td class="aka_padding_norm aka_cellBorders"></c:when>
-																									</c:choose>
-
-																									</c:forEach>
-																									<c:if test="${displayItem.itemGroup.groupMetaBean.repeatingGroup}">
-
-																								<td class="aka_padding_norm aka_cellBorders">
-																									<input type="hidden"
-																									       name="<c:out value="${repeatParentId}"/>_[<c:out value="${repeatParentId}"/>].newRow"
-																									       value="yes"/>
-
-																									<button stype="remove"
-																									        type="button"
-																									        template="<c:out value="${repeatParentId}"/>"
-																									        class="button_remove"
-																									        style="display:block;"></button>
-																								</td>
-																								</c:if>
-																							</tr>
-
-																						</c:if>
-																						<c:set var="uniqueId"
-																						       value="${uniqueId +1}"/>
-																					</c:forEach>
-																					<c:if test="${displayItem.itemGroup.groupMetaBean.repeatingGroup}">
-																						<tr>
-																							<td class="aka_padding_norm aka_cellBorders"
-																							    colspan="<c:out value="${totalColsPlusSubcols + 1}"/>">
-																								<button stype="add"
-																								        type="button"
-																								        template="<c:out value="${repeatParentId}"/>"
-																								        class="button_search">
-																									<fmt:message
-																											key="add"
-																											bundle="${resword}"/></button>
-																							</td>
-																						</tr>
-																					</c:if>
-																					</tbody>
-
-																				</table>
-																				<%--test for itemgroup named Ungrouped --%>
-																			</c:if>
+																	<c:when test="${section.eventDefinitionCRF.electronicSignature == true}">
+																		<td valign="bottom">
+																			<input type="checkbox"
+																			       id="markCompleteId"
+																			       name="markComplete"
+																			       value="Yes"
+																			<c:if test="${markComplete=='Yes'}">
+																			       checked </c:if>
+																			       onclick="sm('box', this, 730,100);">
 																		</td>
-																	</tr>
+																		<td valign="bottom"
+																		    nowrap="nowrap">
+																			&nbsp;
+																			<fmt:message
+																					key="mark_CRF_complete"
+																					bundle="${resword}"/>&nbsp;&nbsp;&nbsp;
+																		</td>
+																	</c:when>
+																	<c:otherwise>
+																		<td valign="bottom">
+																			<input type="checkbox"
+																			       id="markCompleteId"
+																			       name="markComplete"
+																			       value="Yes"
+																			<c:if test="${markComplete=='Yes'}">
+																			       checked </c:if>
+																			       onclick="displayMessageFromCheckbox(this,'
+																				       <fmt:message
+																						       key="marking_CRF_complete_finalize_DE"
+																						       bundle="${restext}"/>')">
+																		</td>
+																		<td valign="bottom"
+																		    nowrap="nowrap">
+																			&nbsp;
+																			<fmt:message
+																					key="mark_CRF_complete"
+																					bundle="${resword}"/>&nbsp;&nbsp;&nbsp;
+																		</td>
+																	</c:otherwise>
+																</c:choose>
+															</c:when>
+															<c:otherwise>
+																<td colspan="2">
+																	&nbsp;
+																</td>
+															</c:otherwise>
+														</c:choose>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<!-- end of page number and buttons-->
+
+						</c:if>
+
+						<c:choose>
+
+						<c:when test="${displayItem.inGroup == true}">
+							<c:set var="currPage"
+							       value="${displayItem.pageNumberLabel}"/>
+							<%-- the section borders property value --%>
+							<tr>
+									<%-- place where we need to highlight sections,
+										one of the error keys should equal the item group's OID --%>
+								<c:set var="isSectionShown" value="false"/>
+								<c:forEach var="formMsg"
+								           items="${formMessages}">
+									<c:if test="${formMsg.key eq displayItem.itemGroup.itemGroupBean.oid}">
+										<c:set var="isSectionShown"
+										       value="true"/>
+									</c:if>
+								</c:forEach>
+
+								<td <c:if test="${hasShown && isSectionShown}"> class="aka_group_show" </c:if> >
+										<%-- end place where we highlight sections --%>
+									<c:set var="uniqueId" value="0"/>
+											<c:set var="repeatParentId" value="${displayItem.itemGroup.itemGroupBean.oid}"/>
+											<c:set var="repeatNumber" value="${displayItem.itemGroup.groupMetaBean.repeatNum}"/>
+											<c:choose>
+												<c:when test="${groupHasData}">
+											<!-- there are already item data for an item group, repeat number just be 1-->
+
+													<c:set var="repeatNumber" value="0"/>
+												</c:when>
+												<c:when test="${isFirstTimeOnSection == section.section.id}">
+													<c:set var="repeatNumber" value="0"/>
+												</c:when>
+												<c:otherwise>
+													<c:set var="repeatNumber" value="${repeatNumber-1}"/>
+												</c:otherwise>
+											</c:choose>
+											<c:set var="repeatMax" value="${displayItem.itemGroup.groupMetaBean.repeatMax}"/>
+											<c:set var="totalColsPlusSubcols" value="0"/>
+											<c:set var="questionNumber" value=""/>
+										<%--the itemgroups include a group for orphaned items, in the order they should appear,
+									but the custom tag uses that, not this jstl code--%>
+											<c:if test="${! (repeatParentId eq 'Ungrouped')}">
+													<%-- implement group header--%>
+												<c:if test="${! (displayItem.itemGroup.groupMetaBean.header eq '')}">
+													<div class="aka_group_header">
+														<strong>
+															<c:out value="${displayItem.itemGroup.groupMetaBean.header}" escapeXml="false"/>
+														</strong>
+													</div>
+												</c:if>
+
+													<%--表格主体--%>
+												<table class="table table-bordered" style="background-color: white;margin: auto;border: 1px solid #ADADAD">
+														<%--表格表头--%>
+													<thead>
+														<tr >
+																<%-- if there are horizontal checkboxes or radios anywhere in the group...--%>
+															<c:set var="isHorizontal"
+															       scope="request"
+															       value="${false}"/>
+																	<%--2017-5-16 如何循环产生表头??尚不清楚--%>
+															<c:forEach var="thItem" items="${displayItem.itemGroup.items}">
+																<!-- found show item: <c:out
+																	value="${thItem.metadata.showItem}"/> -->
+
+																<c:if test="${thItem.metadata.showItem}">
+																	<c:set var="questionNumber"
+																	       value="${thItem.metadata.questionNumberLabel}"/>
+																	<%-- We have to add a second row of headers if the response_layout property is horizontal for checkboxes. --%>
+																	<c:set var="isHorizontalCellLevel"
+																	       scope="request"
+																	       value="${false}"/>
+																	<%--2017-5-16 效果未知，咱不影响修改表头样式--%>
+																	<c:if test="${thItem.metadata.responseLayout eq 'horizontal' || thItem.metadata.responseLayout eq 'Horizontal'}">
+																		<c:set var="isHorizontal"
+																		       scope="request"
+																		       value="${true}"/>
+																		<c:set var="isHorizontalCellLevel"
+																		       scope="request"
+																		       value="${true}"/>
+																		<c:set var="optionsLen"
+																		       value="0"/>
+																		<%--2017-5-16 效果未知--%>
+																		<c:forEach
+																				var="optn"
+																				items="${thItem.metadata.responseSet.options}">
+																			<c:set var="optionsLen"
+																			       value="${optionsLen+1}"/>
+
+																		</c:forEach>
+																	</c:if>
+
+																	<c:choose>
+																		<c:when test="${isHorizontalCellLevel && (thItem.metadata.responseSet.responseType.name eq 'checkbox' || thItem.metadata.responseSet.responseType.name eq 'radio')}">
+																			<th colspan="<c:out
+																				value='${optionsLen}'/>">
+																			<%-- compute total columns value for the add button row colspan attribute--%>
+																			<c:set var="totalColsPlusSubcols"
+																			       value="${totalColsPlusSubcols + optionsLen}"/>
+																		</c:when>
+
+																		<c:otherwise>
+																			<%--2017-5-17 影响垂直表表头样式，如何影响并不清晰，如何删除结束日期选项，问题比较大--%>
+																			<th style="border: 1px solid #ADADAD;text-align: center;font-weight: bold">
+																			<%-- compute total columns value for the add button row colspan attribute--%>
+																			<c:set var="totalColsPlusSubcols"
+																			       value="${totalColsPlusSubcols + 1}"/>
+																		</c:otherwise>
+																	</c:choose>
+
+																	<c:choose>
+																		<c:when test="${thItem.metadata.header == ''}">
+																			<c:if test="${! (empty questionNumber)}">
+																				<span style="margin-right:1em">
+																					<c:out value="${questionNumber}"
+																					       escapeXml="false"/>
+																				</span>
+																			</c:if>
+
+																			<%--表头内容--%>
+																			<c:out value="${thItem.metadata.leftItemText}"
+																			       escapeXml="false"/>
+
+																		</c:when>
+																		<c:otherwise>
+																			<c:if test="${! (empty questionNumber)}">
+																				<span style="margin-right:1em">
+																					<c:out value="${questionNumber}"
+																							escapeXml="false"/>
+
+																				</span>
+																			</c:if>
+																			<%--2017-5-16 输出什么暂不清楚--%>
+																			<c:out value="${thItem.metadata.header}"
+																			       escapeXml="false"/>
+																		</c:otherwise>
+																	</c:choose>
+																	</th>
+																</c:if>
+															</c:forEach>
+
+																	<%--最后一列，删除标签列--%>
+															<c:if test="${displayItem.itemGroup.groupMetaBean.repeatingGroup}">
+																<th style="border: 1px solid #ADADAD;text-align: center;font-weight: bold"/>
+															</c:if>
+														</tr>
+
+														<%--2017-5-16 “如果是水平表”，要干什么事不清楚，现在改垂直表，暂不考虑该问题--%>
+														<c:if test="${isHorizontal}">
+															<%-- create another row --%>
+															<tr>
+																<c:forEach var="thItem"
+																           items="${displayItem.itemGroup.items}">
+																	<!-- found show item:
+																	<c:out value="${thItem.metadata.showItem}"/> -->
+																	<c:if test="${thItem.metadata.showItem}">
+																		<c:set var="isHorizontalCellLevel"
+																		       scope="request"
+																		       value="${false}"/>
+																		<c:if test="${thItem.metadata.responseLayout eq 'horizontal' ||
+			                                                                                            thItem.metadata.responseLayout eq 'Horizontal'}">
+																			<c:set var="isHorizontalCellLevel"
+																			       scope="request"
+																			       value="${true}"/>
+																		</c:if>
+																		<c:choose>
+
+																			<c:when test="${isHorizontalCellLevel &&
+			                                                                                (thItem.metadata.responseSet.responseType.name eq 'checkbox' ||
+			                                                                                thItem.metadata.responseSet.responseType.name eq 'radio')}">
+
+																				<%--循环产生页面--%>
+																				<c:forEach
+																						var="respOpt"
+																						items="${thItem.metadata.responseSet.options}">
+																					<th class="aka_headerBackground aka_padding_large aka_cellBorders">
+																						<c:out value="${respOpt.text}"/></th>
+																				</c:forEach>
+
+																			</c:when>
+
+																			<c:otherwise>
+																				<th class="aka_headerBackground aka_padding_large aka_cellBorders"/>
+																			</c:otherwise>
+																		</c:choose>
+																	</c:if>
+																</c:forEach>
+
+																<th/>
+															</tr>
+														</c:if>
+													</thead>
+
+															<%--表格身体--%>
+													<tbody >
+
+													<c:set var="uniqueId" value="${0}"/>
+													<c:set var="repeatRowCount" value="0"/>
+
+													<c:forEach var="bodyItemGroup" items="${displayItem.itemGroups}">
+														<c:set var="repeatRowCount" value="${repeatRowCount+1}"/>
+												<%--<b>Hello World</b>--%>
+													</c:forEach>
+											<!-- there are data posted already -->
+
+													<c:forEach var="bodyItemGroup" items="${displayItem.itemGroups}"
+											           varStatus="status">
+														<c:set var="columnNum" value="1"/>
+												<!-- hasError is set to true when validation error happens-->
+
+												<!-- JN: So, the cross button should not be displayed for the items which are present in the -->
+												<!-- not the last row -->
+														<tr repeat="0" />
+														<c:set var="columnNum"
+														       value="1"/>
+
+														<c:set var="isButtonRemShow"
+														       value="true"/>
+														<%--2017-5-16 起什么作用暂时未知--%>
+														<c:forEach var="bodyItem"
+														           items="${bodyItemGroup.items}">
 
 
+															<c:if test="${groupHasData}">
+																<c:set var="isButtonRemShow"
+																       value="false"/>
+															</c:if>
+
+													<!-- found show item: <c:out value="${bodyItem.metadata.showItem}"/> -->
+															<c:choose>
+																<c:when test="${bodyItem.metadata.showItem}">
+															<%-- highlighting for items within item groups, tbh --%>
+															<%-- update td class with aka_group_show if they meet the criteria --%>
+
+																<c:set var="isItemShown"
+															       value="false"/>
+
+																<c:forEach
+																	var="formMsg"
+																	items="${formMessages}">
+
+
+																<c:set var="inputValue"><c:out
+																		value="${repeatParentId}"/>_<c:out
+																		value="${uniqueId}"/>input<c:out
+																		value="${bodyItem.item.id}"/></c:set>
+																<c:if test="${formMsg.key eq inputValue}">
+																	<c:set var="isItemShown"
+																	       value="true"/>
+																</c:if>
+															</c:forEach>
+															<c:choose>
+																<c:when test="${isItemShown && hasShown}">
+																	<c:set var="extraClass"
+																	       value="aka_group_show"/>
+																</c:when>
+																<c:otherwise>
+																	<c:set var="extraClass"
+																	       value=" "/>
+																	<%-- do nothing here ? --%>
+																</c:otherwise>
+															</c:choose>
+															<c:set var="itemNum"
+															       value="${itemNum + 1}"/>
+															<c:set var="isHorizontalCellLevel"
+															       scope="request"
+															       value="${false}"/>
+															<c:if test="${bodyItem.metadata.responseLayout eq 'horizontal' || bodyItem.metadata.responseLayout eq 'Horizontal'}">
+																<c:set var="isHorizontalCellLevel"
+																       scope="request"
+																       value="${true}"/>
+															</c:if>
+															<c:choose>
+
+																<c:when test="${isHorizontalCellLevel && (bodyItem.metadata.responseSet.responseType.name eq 'radio' ||
+																				bodyItem.metadata.responseSet.responseType.name eq 'checkbox')}">
+																	<%-- For horizontal checkboxes, radio buttons--%>
+																	<c:forEach
+																			var="respOption"
+																			items="${bodyItem.metadata.responseSet.options}">
+																		<td style="border: 1px solid black" <c:out value="${extraClass}"/>">
+
+																			<c:set var="displayItem"
+																			       scope="request"
+																			       value="${bodyItem}"/>
+																			<c:set var="responseOptionBean"
+																			       scope="request"
+																			       value="${respOption}"/>
+																			<c:import
+																					url="../submit/showGroupItemInput.jsp">
+																				<c:param
+																						name="repeatParentId"
+																						value="${repeatParentId}"/>
+																				<c:param
+																						name="rowCount"
+																						value="${uniqueId}"/>
+																				<c:param
+																						name="key"
+																						value="${numOfDate}"/>
+																				<c:param
+																						name="isLast"
+																						value="${false}"/>
+																				<c:param
+																						name="tabNum"
+																						value="${itemNum}"/>
+																				<c:param
+																						name="isHorizontal"
+																						value="${isHorizontalCellLevel}"/>
+																				<c:param
+																						name="defaultValue"
+																						value="${bodyItem.metadata.defaultValue}"/>
+																				<c:param
+																						name="originJSP"
+																						value="initialDataEntry"/>
+																			</c:import>
+																		</td>
+																	</c:forEach>
 																</c:when>
 
+																<%-- could be a radio or checkbox that is not horizontal --%>
 																<c:otherwise>
+																	<%--垂直表格单元格设置--%>
+																	<td  style="border: 1px solid #ADADAD;align-content: center">
+
+																		<c:set var="displayItem"
+																		       scope="request"
+																		       value="${bodyItem}"/>
+																		<%--作用未知--%>
+																		<c:import
+																				url="../submit/generateGroupItemTxt.jsp">
+																			<c:param
+																					name="itemId"
+																					value="${bodyItem.item.id}"/>
+																			<c:param
+																					name="inputType"
+																					value="${bodyItem.metadata.responseSet.responseType.name}"/>
+																			<c:param
+																					name="function"
+																					value="${bodyItem.metadata.responseSet.options[0].value}"/>
+																			<c:param
+																					name="linkText"
+																					value="${bodyItem.metadata.leftItemText}"/>
+																			<c:param
+																					name="repeatParentId"
+																					value="${repeatParentId}"/>
+																			<c:param
+																					name="rowCount"
+																					value="${uniqueId}"/>
+																			<c:param
+																					name="isLast"
+																					value="${false}"/>
+																			<c:param
+																					name="side"
+																					value="left"/>
+
+																		</c:import>
+
+																		<%--与表格中输入框、日历等元素有关--%>
+																		<c:import
+																				url="../submit/showGroupItemInput.jsp">
+																			<c:param
+																					name="repeatParentId"
+																					value="${repeatParentId}"/>
+																			<c:param
+																					name="rowCount"
+																					value="${uniqueId}"/>
+																			<%--与日历插件有关--%>
+																			<c:param
+																					name="key"
+																					value="${numOfDate}"/>
+																			<c:param
+																					name="isLast"
+																					value="${false}"/>
+																			<c:param
+																					name="tabNum"
+																					value="${itemNum}"/>
+																				<c:param
+																						name="defaultValue"
+																						value="${bodyItem.metadata.defaultValue}"/>
+																			<%--与日历控件有关--%>
+																			<c:param
+																					name="originJSP"
+																					value="initialDataEntry"/>
+																		</c:import>
+
+																		<%--作用未知--%>
+																		<c:import
+																				url="../submit/generateGroupItemTxt.jsp">
+																			<c:param
+																					name="itemId"
+																					value="${bodyItem.item.id}"/>
+																			<c:param
+																					name="inputType"
+																					value="${bodyItem.metadata.responseSet.responseType.name}"/>
+																			<c:param
+																					name="function"
+																					value="${bodyItem.metadata.responseSet.options[0].value}"/>
+																			<c:param
+																					name="linkText"
+																					value="${bodyItem.metadata.rightItemText}"/>
+																			<c:param
+																					name="repeatParentId"
+																					value="${repeatParentId}"/>
+																			<c:param
+																					name="rowCount"
+																					value="${uniqueId}"/>
+																			<c:param
+																					name="isLast"
+																					value="${false}"/>
+																			<c:param
+																					name="side"
+																					value="right"/>
+																		</c:import>
+
+																	</td>
+
+																</c:otherwise>
+															</c:choose>
+															<c:set var="columnNum"
+															       value="${columnNum+1}"/>
+														</c:when>
+														<c:when test="${bodyItem.blankDwelt}"><td style="border: 1px solid #ADADAD"></c:when>
+													</c:choose>
+
+												</c:forEach>
+												<c:if test="${displayItem.itemGroup.groupMetaBean.repeatingGroup}">
+
+													<%--最后一列--%>
+													<td style="border: 1px solid #ADADAD">
+
+															<%-- check for manual in the input name; if rowCount > 0 then manual
+													   will be in the name --%>
+														<c:choose>
+															<c:when test="${uniqueId ==0}">
+																<input type="hidden"
+																       name="<c:out value="${repeatParentId}"/>_<c:out value="${uniqueId}"/>.newRow"
+																       value="yes">
+															</c:when>
+															<c:otherwise>
+																<input type="hidden"
+																       name="<c:out value="${repeatParentId}"/>_manual<c:out value="${uniqueId}"/>.newRow"
+																       value="yes">
+															</c:otherwise>
+														</c:choose>
+
+														<c:if test="${isButtonRemShow == true }">
+															<button stype="remove"
+															        type="button"
+															        template="<c:out value="${repeatParentId}"/> + test_1"
+															        class="button_remove"></button>
+														</c:if>
+													</td>
+
+												</c:if>
+												</tr>
+
+												<c:if test="${status.last}">
+													<!-- for the last but not the first row and only row, we need to use [] so the repetition javascript can copy it to create new row-->
+													<tr id="<c:out value="${repeatParentId}"/>"
+													    repeat="template"
+													    repeat-start="${repeatNumber}"
+													    repeat-max="<c:out value="${repeatMax}"/>">
+														<c:set var="isButtonRemShow"
+														       value="true"/>
+														<%--2017-5-16 Hello test出现在表格外部，作用未知--%>
+														<c:forEach
+																var="bodyItem"
+																items="${bodyItemGroup.items}">
+														<!-- found show item: <c:out value="${bodyItem.metadata.showItem}"/> -->
+
+														<c:if test="${!empty bodyItem.data}">
+
+															<c:set var="isButtonRemShow"
+															       value="false"/>
+														</c:if>
+
+														<c:choose>
+														<c:when test="${bodyItem.metadata.showItem}">
+															<%-- highlighting for items within item groups, tbh --%>
+															<%-- update td class with aka_group_show if they meet the criteria --%>
+															<c:set var="isItemShown"
+															       value="false"/>
+															<c:forEach
+																	var="formMsg"
+																	items="${formMessages}">
+
+																<c:set var="inputValue"><c:out
+																		value="${repeatParentId}"/>_<c:out
+																		value="${uniqueId}"/>input<c:out
+																		value="${bodyItem.item.id}"/></c:set>
+																<c:if test="${formMsg.key eq inputValue}">
+																	<c:set var="isItemShown"
+																	       value="true"/>
+																	<!-- PASS!
+																	<c:out value="${inputValue}"/> -->
+																</c:if>
+
+															</c:forEach>
+
+															<c:choose>
+																<c:when test="${isItemShown && hasShown}">
+																	<c:set var="extraClass"
+																	       value="aka_group_show"/>
+																</c:when>
+																<c:otherwise>
+																	<c:set var="extraClass"
+																	       value=" "/>
+																	<%-- do nothing here ? --%>
+																</c:otherwise>
+															</c:choose>
+															<%-- end of highlighting for items within item groups, tbh 05/2010--%>
+															<!-- discrepancy count for this item
+															<c:out value="${repeatParentId}"/>
+															<c:out value="${bodyItem.numDiscrepancyNotes}"/> -->
+															<c:set var="itemNum"
+															       value="${itemNum + 1}"/>
+															<c:set var="isHorizontalCellLevel"
+															       scope="request"
+															       value="${false}"/>
+															<c:if test="${bodyItem.metadata.responseLayout eq 'horizontal' ||
+																									bodyItem.metadata.responseLayout eq 'Horizontal'}">
+																<c:set var="isHorizontalCellLevel"
+																       scope="request"
+																       value="${true}"/>
+															</c:if>
+															<c:choose>
+
+																<c:when test="${isHorizontalCellLevel &&
+																										(bodyItem.metadata.responseSet.responseType.name eq 'radio' ||
+																										bodyItem.metadata.responseSet.responseType.name eq 'checkbox')}">
+																	<%-- For horizontal checkboxes, radio buttons--%>
+																	<c:forEach
+																			var="respOption"
+																			items="${bodyItem.metadata.responseSet.options}">
+																		<td class="aka_padding_norm aka_cellBorders <c:out value="${extraClass}"/>">
+																			<c:set var="displayItem"
+																			       scope="request"
+																			       value="${bodyItem}"/>
+																			<c:set var="responseOptionBean"
+																			       scope="request"
+																			       value="${respOption}"/>
+																			<c:import
+																					url="../submit/showGroupItemInput.jsp">
+																				<c:param
+																						name="repeatParentId"
+																						value="${repeatParentId}"/>
+																				<c:param
+																						name="rowCount"
+																						value="${uniqueId}"/>
+																				<c:param
+																						name="key"
+																						value="${numOfDate}"/>
+																				<c:param
+																						name="isLast"
+																						value="${true}"/>
+																				<c:param
+																						name="isNewItem"
+																						value="${true}"/>
+																				<c:param
+																						name="tabNum"
+																						value="${itemNum}"/>
+																				<c:param
+																						name="isHorizontal"
+																						value="${isHorizontalCellLevel}"/>
+																				<c:param
+																						name="defaultValue"
+																						value="${bodyItem.metadata.defaultValue}"/>
+																				<c:param
+																						name="originJSP"
+																						value="initialDataEntry"/>
+
+																			</c:import>
+																		</td>
+																	</c:forEach>
+																</c:when>
+
+																<%-- could be a radio or checkbox that is not horizontal --%>
+																<c:otherwise>
+																	<%--新增行--%>
+																	<td style="border: 1px solid #ADADAD">
+																		<c:set var="displayItem"
+																		       scope="request"
+																		       value="${bodyItem}"/>
+																		<c:import
+																				url="../submit/generateGroupItemTxt.jsp">
+																			<c:param
+																					name="itemId"
+																					value="${bodyItem.item.id}"/>
+																			<c:param
+																					name="inputType"
+																					value="${bodyItem.metadata.responseSet.responseType.name}"/>
+																			<c:param
+																					name="function"
+																					value="${bodyItem.metadata.responseSet.options[0].value}"/>
+																			<c:param
+																					name="linkText"
+																					value="${bodyItem.metadata.leftItemText}"/>
+																			<c:param
+																					name="repeatParentId"
+																					value="${repeatParentId}"/>
+																			<c:param
+																					name="rowCount"
+																					value="${uniqueId}"/>
+																			<c:param
+																					name="isLast"
+																					value="${true}"/>
+																			<c:param
+																					name="side"
+																					value="left"/>
+																		</c:import>
+																		<c:import
+																				url="../submit/showGroupItemInput.jsp">
+																			<c:param
+																					name="repeatParentId"
+																					value="${repeatParentId}"/>
+																			<c:param
+																					name="rowCount"
+																					value="${uniqueId}"/>
+																			<c:param
+																					name="key"
+																					value="${numOfDate}"/>
+																			<c:param
+																					name="isLast"
+																					value="${true}"/>
+																			<c:param
+																					name="isNewItem"
+																					value="${true}"/>
+																			<c:param
+																					name="tabNum"
+																					value="${itemNum}"/>
+																			<c:param
+																					name="defaultValue"
+																					value="${bodyItem.metadata.defaultValue}"/>
+																			<c:param
+																					name="originJSP"
+																					value="initialDataEntry"/>
+																		</c:import>
+																		<c:import
+																				url="../submit/generateGroupItemTxt.jsp">
+																			<c:param
+																					name="itemId"
+																					value="${bodyItem.item.id}"/>
+																			<c:param
+																					name="inputType"
+																					value="${bodyItem.metadata.responseSet.responseType.name}"/>
+																			<c:param
+																					name="function"
+																					value="${bodyItem.metadata.responseSet.options[0].value}"/>
+																			<c:param
+																					name="linkText"
+																					value="${bodyItem.metadata.rightItemText}"/>
+																			<c:param
+																					name="repeatParentId"
+																					value="${repeatParentId}"/>
+																			<c:param
+																					name="rowCount"
+																					value="${uniqueId}"/>
+																			<c:param
+																					name="isLast"
+																					value="${true}"/>
+																			<c:param
+																					name="side"
+																					value="right"/>
+																		</c:import>
+																	</td>
+																</c:otherwise>
+															</c:choose>
+															<c:set var="columnNum"
+															       value="${columnNum+1}"/>
+														</c:when>
+														<c:when test="${bodyItem.blankDwelt}">
+														<td class="aka_padding_norm aka_cellBorders"></c:when>
+															</c:choose>
+
+															</c:forEach>
+															<c:if test="${displayItem.itemGroup.groupMetaBean.repeatingGroup}">
+
+														<%--增加一列时显示的删除图标--%>
+														<td style="border: 1px solid #ADADAD">
+															<input type="hidden"
+															       name="<c:out value="${repeatParentId}"/>_[<c:out value="${repeatParentId}"/>].newRow"
+															       value="yes"/>
+
+															<button stype="remove"
+															        type="button"
+															        <%--template="<c:out value="${repeatParentId}"/>"--%>
+															        class="button_remove"
+															        style="display:block;">
+																<span class="glyphicon glyphicon-remove" aria-hidden="true">
+																</span>
+															</button>
+														</td>
+
+														</c:if>
+													</tr>
+
+												</c:if>
+												<c:set var="uniqueId"
+												       value="${uniqueId +1}"/>
+											</c:forEach>
+											<c:if test="${displayItem.itemGroup.groupMetaBean.repeatingGroup}">
+												<%--新添一行按钮--%>
+												<tr >
+													<td >
+														<button stype="add"
+														        type="button"
+														        template="<c:out value="${repeatParentId}"/>"
+														        class="btn btn-primary">
+															<fmt:message
+																	key="add"
+																	bundle="${resword}"/></button>
+													</td>
+												</tr>
+											</c:if>
+											</tbody>
+
+										</table>
+										<%--test for itemgroup named Ungrouped --%>
+									</c:if>
+								</td>
+							</tr>
 
 
-																<c:set var="currPage"
-																       value="${displayItem.singleItem.metadata.pageNumberLabel}"/>
+						</c:when>
 
-																<!--  found show item <c:out value="${displayItem.singleItem.metadata.showItem}"/> -->
-																<c:set var="cdisplay"
-																       value="${displayItem.singleItem.scdData.scdItemMetadataBean.id}"/>
-																<c:if test="${displayItem.singleItem.metadata.showItem || cdisplay>0}">
-																	<%-- SHOW THE PARENT FIRST --%>
-																<c:if test="${displayItem.singleItem.metadata.parentId == 0}">
+						<c:otherwise>
 
-																<!--ACCORDING TO COLUMN NUMBER, ARRANGE QUESTIONS IN THE SAME LINE-->
 
-																<c:if test="${displayItem.singleItem.metadata.columnNumber <=1}">
-																<c:if test="${numOfTr > 0 }">
-																</tr>
-															</table>
+						<c:set var="currPage"
+						       value="${displayItem.singleItem.metadata.pageNumberLabel}"/>
+
+						<!--  found show item <c:out value="${displayItem.singleItem.metadata.showItem}"/> -->
+						<c:set var="cdisplay"
+						       value="${displayItem.singleItem.scdData.scdItemMetadataBean.id}"/>
+						<c:if test="${displayItem.singleItem.metadata.showItem || cdisplay>0}">
+							<%-- SHOW THE PARENT FIRST --%>
+						<c:if test="${displayItem.singleItem.metadata.parentId == 0}">
+
+						<!--ACCORDING TO COLUMN NUMBER, ARRANGE QUESTIONS IN THE SAME LINE-->
+
+						<c:if test="${displayItem.singleItem.metadata.columnNumber <=1}">
+						<c:if test="${numOfTr > 0 }">
+						</tr>
+					</table>
 				</td>
 
 			</tr>
@@ -1583,9 +1566,11 @@
 				</c:otherwise>
 				</c:choose>
 					<%--<td class="table_cell_left" bgcolor="#F5F5F5">--%>
-				<td class="table_cell_left aka_stripes"><b><c:out value=
-						                                                  "${displayItem.singleItem.metadata.header}"
-				                                                  escapeXml="false"/></b></td>
+				<%--附录一--%>
+				<td class="table_cell_left aka_stripes" style = "border: 1px solid #ADADAD">
+					<b><c:out value="${displayItem.singleItem.metadata.header}" escapeXml="false"/>
+					</b>
+				</td>
 			</tr>
 			</c:if>
 			<c:if test="${!empty displayItem.singleItem.metadata.subHeader}">
@@ -1629,7 +1614,7 @@
 				</c:otherwise>
 				</c:choose>
 				<td class="table_cell_left">
-					<table border="0">
+					<table width="100%">
 						<tr>
 							</c:if>
 
@@ -1678,13 +1663,14 @@
 												</c:otherwise>
 												</c:choose>
 
-												<td valign="top" class="aka_ques_block"><c:out
+												<td valign="top" class="aka_ques_block" style = "border: 1px solid #ADADAD"><c:out
 														value="${displayItem.singleItem.metadata.questionNumberLabel}"
-														escapeXml="false"/></td>
-												<!--
+														escapeXml="false"/>
+												</td>
+											<!--
                             <td valign="top" class="aka_text_block"><c:out value="${displayItem.singleItem.metadata.leftItemText}" escapeXml="false"/></td>
                             -->
-												<td valign="top" class="aka_text_block">
+												<td valign="top" class="aka_text_block" style = "border: 1px solid #ADADAD">
 
 													<c:import url="../submit/generateLeftItemTxt.jsp">
 														<c:param name="itemId"
@@ -1699,7 +1685,7 @@
 													</c:import>
 												</td>
 
-												<td valign="top" nowrap="nowrap">
+												<td valign="top" nowrap="nowrap" style = "border: 1px solid #ADADAD">
 														<%-- display the HTML input tag --%>
 													<c:set var="displayItem" scope="request"
 													       value="${displayItem.singleItem}"/>
@@ -1716,15 +1702,15 @@
 
 												</td>
 												<c:if test='${displayItem.singleItem.item.units != ""}'>
-													<td valign="top">
-														<c:out value="(${displayItem.singleItem.item.units})"
-														       escapeXml="false"/>
+													<td valign="top" style = "border: 1px solid #ADADAD">
+														<c:out value="(${displayItem.singleItem.item.units})" escapeXml="false"/>
+
 													</td>
 												</c:if>
 												<!--
                             <td valign="top"><c:out value="${displayItem.singleItem.metadata.rightItemText}" escapeXml="false" /></td>
                             -->
-												<td valign="top">
+												<td valign="top" style = "border: 1px solid #ADADAD">
 
 													<c:import url="../submit/generateLeftItemTxt.jsp">
 														<c:param name="itemId"
@@ -1763,7 +1749,7 @@
 									<%-- NOW SHOW THE CHILDREN --%>
 
 								<td class="table_cell">
-									<table border="0">
+									<table class="table table-bordered" width="100%">
 										<c:set var="notFirstRow" value="${0}"/>
 										<c:forEach var="childItem" items="${displayItem.singleItem.children}">
 										<c:set var="ccdisplay" value="${childItem.scdData.scdItemMetadataBean.id}"/>
@@ -1968,10 +1954,12 @@
 
 										<c:choose>
 											<c:when test="${! empty formMessages}">
-												<td valign="bottom"><img name="DataStatus_bottom"
-												                         alt="<fmt:message key="data_status" bundle="${resword}"/>"
-												                         title="<fmt:message key="changed_not_saved" bundle="${restext}"/>"
-												                         src="images/icon_UnsavedData.gif">&nbsp;
+												<td valign="bottom">
+													<img name="DataStatus_bottom"
+													     alt="<fmt:message key="data_status" bundle="${resword}"/>"
+													     title="<fmt:message key="changed_not_saved" bundle="${restext}"/>"
+													     src="images/icon_UnsavedData.gif">
+													&nbsp;
 												</td>
 											</c:when>
 											<c:otherwise>
@@ -1990,14 +1978,15 @@
 
 					<!-- End Table Contents -->
 
+				</td>
+		</tr>
+		</table>
+
 	</form>
 
 
-</div>
-
-
-<div id="testdiv1" style=
-		"position:absolute;visibility:hidden;background-color:white"></div>
-
+		<div id="testdiv1" style="position:absolute;visibility:hidden;background-color:white">
+		</div>
 </body>
+
 </html>
